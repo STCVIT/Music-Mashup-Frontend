@@ -1,5 +1,4 @@
 import {Link} from "react-router-dom";
-
 import outerring from '../Images/outerring.png'
 import innerring from '../Images/innerring.png'
 import upper_semi_empty from '../Images/upper_semi_empty.png'
