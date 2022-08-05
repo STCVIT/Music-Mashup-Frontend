@@ -19,7 +19,7 @@ export default function LandingFour() {
                 <div className="text-[24px] text-whiteone">
                     <span className = "tracking-[4rem]">MAS</span>H
                 </div>
-                <div className = "text-[100px] opacity-5">
+                <div className = "text-[100px] opacity-[10%]">
                     <span className = "tracking-[8rem]">MU<span className="text-whiteone">SMA</span>S</span>H
                 </div>
                 <div className="text-[24px] text-blackone">

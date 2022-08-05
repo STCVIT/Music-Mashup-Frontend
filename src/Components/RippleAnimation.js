@@ -14,7 +14,7 @@ const Ripple = () => {
       });
       return () => lottie.stop();
     }, []);
-    return <div style={{ height: 300, width: 300 }} ref={anime}></div>;
+    return <div style={{ height: 250, width: 300 }} ref={anime}></div>;
   };
 
 export default Ripple;

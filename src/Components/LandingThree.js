@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+
 import outerring from '../Images/outerring.png'
 import innerring from '../Images/innerring.png'
 import upper_semi_empty from '../Images/upper_semi_empty.png'
@@ -18,7 +19,7 @@ export default function LandingThree() {
                 <div className="text-[24px] text-blackone">
                     <span className = "tracking-[4rem]">MAS</span>H
                 </div>
-                <div className = "text-[100px] opacity-5">
+                <div className = "text-[100px] opacity-[10%]">
                     <span className = "tracking-[8rem]">MU<span className="text-whiteone">SMA</span>S</span>H
                 </div>
                 <div className="text-[24px] text-whiteone">
