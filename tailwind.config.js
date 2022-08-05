@@ -5,11 +5,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors : {
-        'blackone' : '#2A2A2A',
-        'whiteone' : '#F2F2F2',
+      colors: {
+        'blackone': '#2A2A2A',
+        'whiteone': '#F2F2F2',
+      },
+      animation: {
+        'spin-slow': 'spin 10s linear infinite',
       },
     },
-  },
-  plugins: [],
+    plugins: [],
+  }
 }

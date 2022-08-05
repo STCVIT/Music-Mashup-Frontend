@@ -6,17 +6,18 @@ import dustbin_active from '../Images/dustbin_active.png'
 import mash_btn_inactive from '../Images/mash_btn_inactive.png'
 import mash_btn_active from '../Images/mash_btn_active.png'
 import home_white from '../Images/home_white.png'
+import circlesdesign from '../Images/circlesdesign.png'
 import { motion } from "framer-motion";
 
 
 export default function DragDropOne() {
 
     return (
-        <div className="bg-blackone min-w-screen min-h-screen relative overflow-hidden flex ">
+        <div className="bg-blackone min-w-screen min-h-screen relative overflow-hidden flex  ">
             <Link to='../LandingTwo'>
                 <motion.div whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} className="absolute right-[1rem] top-[1rem] max-w-[2rem]"><img src={home_white} alt=""/></motion.div>
             </Link>
-            <img  alt = "BG Design" src={dragdrop} className="absolute"/>
+            <motion.img initial={{ y:-100}} animate={{rotate:360}} transition={{ ease: "linear", duration: 20, repeat: Infinity }}  alt = "BG Design" src={circlesdesign} className="absolue h-96 mr-96 top-[-50%]"/>
             <div className = "absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 rounded-lg min-h-[50%] min-w-[50%] text-whiteone">
                 <div className = "relative m-5 p-5 border-2 rounded-lg border-dashed">
                     <div className="flex flex-wrap items-center flex-col ">
