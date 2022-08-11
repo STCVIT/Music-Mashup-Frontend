@@ -1,21 +1,36 @@
 import {Link} from "react-router-dom";
 import Ripple from "../Components/RippleAnimation";
 import RippleAnimations from "../Components/RippleAnimation";
+import { motion } from "framer-motion";
 
 import pageone_circle from '../Images/pageone_circle.png'
 
 export default function LandingOne() {
     return (
-            <div className="min-w-screen min-h-screen bg-blackone relative overflow-hidden">
-                
-                <div className="no-underline absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                    <RippleAnimations/>
-                </div>
-                <Link to='./LandingTwo'>
-                    <img src={pageone_circle} className = "max-w-[2rem] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"/>
+            
+            <motion.div
+            className="min-w-screen min-h-screen bg-blackone flex">                            
+                <Link to='./LandingTwo' className="m-auto z-20">
+                <motion.img
+                src={pageone_circle}
+                className="max-h-[2rem] max-w-[2rem]"
+                whileHover={{
+                    scale: [1,2,2],
+                    rotate: [0,0,270]
+                }}
+                transition={{
+                    duration: 0.5
+                }}
+                />
                 </Link>
-            </div>
+                    
+                    <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                        <RippleAnimations/>
+                    </div>
+                    
+                    
+            </motion.div>
+            
     )
 
   }
-  

@@ -10,35 +10,75 @@ import { motion } from "framer-motion";
 
 export default function LandingTwo() {
 
-    
+    function handleHoverUpper() {
+        document.querySelector('.upper-text').classList.remove('text-whiteone');
+        document.querySelector('.upper_semi').setAttribute('src', lower_semi_empty);
+    }
+
+    function removeHoverUpper() {
+        document.querySelector('.upper-text').classList.add('text-whiteone');
+        document.querySelector('.upper_semi').setAttribute('src', upper_semi_fill);
+    }
+
+    function handleHoverLower() {
+        document.querySelector('.lower-text').classList.remove('text-whiteone');
+        document.querySelector('.lower_semi').setAttribute('src', upper_semi_empty);
+    }
+
+    function removeHoverLower() {
+        document.querySelector('.lower-text').classList.add('text-whiteone');
+        document.querySelector('.lower_semi').setAttribute('src', lower_semi_fill);
+    }
+
+    // flex justify-center align-middle
 
     return (
-        <div className="bg-whiteone min-w-screen min-h-screen relative overflow-hidden">
-             <motion.div animate={{
+        <div className="bg-whiteone w-screen h-screen overflow-clip">
+             {/* <motion.div animate={{
                 scale:[0,1],
                 opacity:[0,1],
                 y:[1000,500]
                 }}
-                transition={{duration:1}}
-                > 
-                <img alt = "Outer Ring" src={outerring} className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"/>
-                <img alt = "Inner Ring" src={innerring} className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"/>
-                <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                <Link to='../DragDropOne'>
-                <motion.img whileHover={{rotate:180}} alt = "Upper Filled" src={upper_semi_fill} className="relative" onMouseOver={e => (e.currentTarget.src = lower_semi_empty)} onMouseOut={e => (e.currentTarget.src = upper_semi_fill)}/>
-                </Link>
-                <motion.img whileHover={{rotate:180}} alt = "Lower Filled" src={lower_semi_fill} className="relative" onMouseOver={e => (e.currentTarget.src = upper_semi_empty)} onMouseOut={e => (e.currentTarget.src = lower_semi_fill)}/>
-                </div>
-                <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col text-center">
-                    <div className="text-[24px] text-whiteone">
-                        <span className = "tracking-[4rem]">MAS</span>H
-                    </div>
-                    <div className = "text-[100px]">
-                        <span className = "tracking-[8rem]">MU<span className="text-whiteone">SMA</span>S</span>H
-                    </div>
-                    <div className="text-[24px] text-whiteone">
-                        <span className="tracking-[4rem]">LOGI</span>N
-                    </div>
+                transition={{duration:1}}>  */}
+
+                <motion.div>
+                <img alt = "Outer Ring" src={outerring} className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[100vh]"/>
+                <img alt = "Inner Ring" src={innerring} className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[80vh] "/>
+                <img alt = "Inner Ring" src={innerring} className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[75vh] "/>
+
+
+
+                <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[40vh] w-[40vh] text-blackone">
+                    
+                    <Link to='../DragDropOne'>
+                        <div               
+                            onMouseOver={handleHoverUpper}
+                            onMouseOut={removeHoverUpper}
+
+                            className="relative cursor-pointer">
+                            <div className=" upper-text text-[24px] text-whiteone absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                                <span className = "tracking-[2rem]">MAS</span>H
+                            </div>
+                            <motion.img
+                            whileHover = {{rotate: 180}}
+                            className = "upper_semi" src={upper_semi_fill}/>
+                        </div>
+                    </Link>
+
+                    <Link to='@'>
+                        <div               
+                            onMouseOver={handleHoverLower}
+                            onMouseOut={removeHoverLower}
+
+                            className="relative cursor-pointer">
+                            <div className=" lower-text text-[24px] text-whiteone absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                                <span className = "tracking-[2rem]">LOGI</span>N
+                            </div>
+                            <motion.img
+                            whileHover = {{rotate: 180}}
+                            className = "lower_semi" src={lower_semi_fill}/>
+                        </div>
+                    </Link>
                 </div>
             </motion.div>
         </div>
