@@ -7,17 +7,19 @@ import DragDropOne from './Components/DragDropOne'
 import MusicPlayingOne from './Components/MusicPlayingOne'
 import MashingOne from './Components/MashingOne'
 
+import { AnimatePresence } from "framer-motion";
+
 export default function App() {
   return (
     <div>
       <Routes>
-        <Route path='/' exact element={<LandingOne />} />
-        <Route path='/LandingTwo' exact element={<LandingTwo />} />
-        <Route path='/LandingThree' exact element={<LandingThree />} />
-        <Route path='/LandingFour' exact element={<LandingFour />} />
-        <Route path='/DragDropOne' exact element={<DragDropOne />} />
-        <Route path='/MusicPlayingOne' exact element={<MusicPlayingOne />} />
-        <Route path='/MashingOne' exact element={<MashingOne />} />
+          <Route path='/' exact element={<LandingOne />} />
+          <Route path='/LandingTwo' exact element={<LandingTwo />} />
+          <Route path='/LandingThree' exact element={<LandingThree />} />
+          <Route path='/LandingFour' exact element={<LandingFour />} />
+          <Route path='/DragDropOne' exact element={<DragDropOne />} />
+          <Route path='/MusicPlayingOne' exact element={<MusicPlayingOne />} />
+          <Route path='/MashingOne' exact element={<MashingOne />} />
       </Routes>  
       
     </div>
