@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom"
 
+import WhiteScreenAnimation from './WhiteScreenAnimation';
 import outerring from '../Images/outerring.png'
+import outerring2 from '../Images/outerring2.png'
 import innerring from '../Images/innerring.png'
+import innerring2 from '../Images/innerring2.png'
+import question_empty from '../Images/question_empty.png'
+import question_fill from '../Images/question_fill.png'
 import upper_semi_fill from '../Images/upper_semi_fill.png'
 import lower_semi_fill from '../Images/lower_semi_fill.png'
 import lower_semi_empty from '../Images/lower_semi_empty.png'
 import upper_semi_empty from '../Images/upper_semi_empty.png'
 import { motion } from "framer-motion";
+
 
 export default function LandingTwo() {
 
@@ -33,22 +39,50 @@ export default function LandingTwo() {
     // flex justify-center align-middle
 
     return (
-        <div className="bg-whiteone w-screen h-screen overflow-clip">
+        <div>
+            <WhiteScreenAnimation/>
+        <div
+            className="bg-whiteone w-screen h-screen overflow-hidden">
              {/* <motion.div animate={{
                 scale:[0,1],
                 opacity:[0,1],
                 y:[1000,500]
                 }}
                 transition={{duration:1}}>  */}
+                <div className="overflow-hidden">
 
-                <motion.div>
-                <img alt = "Outer Ring" src={outerring} className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[100vh]"/>
-                <img alt = "Inner Ring" src={innerring} className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[80vh] "/>
-                <img alt = "Inner Ring" src={innerring} className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[75vh] "/>
+                <motion.img
+                    // whileHover={{rotate:45}}
+                    alt = "Outer Ring"
+                    src={outerring2}
+                    className="absolute opacity-[70%] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[100vh]"
+                    />
+                <img
+                    alt = "Inner Ring"
+                    src={innerring}
+                    className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[80vh] "
+                    />
+                <img
+                    alt = "Inner Ring"
+                    src={innerring2}
+                    className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[70vh] "
+                    />
+
+                <img
+                    alt = "Inner Ring" src={innerring}
+                    className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[75vh] "
+                    />
+                    <Link to="../Help">
+                        <motion.img
+                        whileHover={{scale:1.2}}
+                            alt = "Question" src={question_empty}
+                            className="absolute bottom-[1rem] right-[1rem] h-[2rem] w-[2rem] cursor-pointer"
+                            />
+                    </Link>
 
 
-
-                <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[40vh] w-[40vh] text-blackone">
+                <div
+                    className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[40vh] w-[40vh] text-blackone">
                     
                     <Link to='../DragDropOne'>
                         <div               
@@ -65,7 +99,7 @@ export default function LandingTwo() {
                         </div>
                     </Link>
 
-                    <Link to='@'>
+                    <Link to='../Login'>
                         <div               
                             onMouseOver={handleHoverLower}
                             onMouseOut={removeHoverLower}
@@ -79,8 +113,10 @@ export default function LandingTwo() {
                             className = "lower_semi" src={lower_semi_fill}/>
                         </div>
                     </Link>
+
                 </div>
-            </motion.div>
+            </div>
+        </div>
         </div>
     )
   }
