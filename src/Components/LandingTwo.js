@@ -52,7 +52,8 @@ export default function LandingTwo() {
                 <div className="overflow-hidden">
 
                 <motion.img
-                    // whileHover={{rotate:45}}
+                    initial={{x:"-50%",y:"-50%"}}
+                    whileHover={{rotate:45}}
                     alt = "Outer Ring"
                     src={outerring2}
                     className="absolute opacity-[70%] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[100vh]"
