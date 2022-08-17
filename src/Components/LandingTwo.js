@@ -40,10 +40,10 @@ export default function LandingTwo() {
 
     return (
         <div>
-            <WhiteScreenAnimation/>
-        <div
-            className="bg-whiteone w-screen h-screen overflow-hidden">
-             {/* <motion.div animate={{
+            <WhiteScreenAnimation />
+            <div
+                className="bg-whiteone w-screen h-screen overflow-hidden">
+                {/* <motion.div animate={{
                 scale:[0,1],
                 opacity:[0,1],
                 y:[1000,500]
@@ -51,75 +51,75 @@ export default function LandingTwo() {
                 transition={{duration:1}}>  */}
                 <div className="overflow-hidden">
 
-                <motion.img
-                    initial={{x:"-50%",y:"-50%"}}
-                    whileHover={{rotate:45}}
-                    alt = "Outer Ring"
-                    src={outerring2}
-                    className="absolute opacity-[70%] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[100vh]"
+                    <motion.img
+                        initial={{ x: "-50%", y: "-50%" }}
+                        whileHover={{ rotate: 45 }}
+                        alt="Outer Ring"
+                        src={outerring2}
+                        className="absolute opacity-[70%] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[100vh]"
                     />
-                <img
-                    alt = "Inner Ring"
-                    src={innerring}
-                    className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[80vh] "
+                    <img
+                        alt="Inner Ring"
+                        src={innerring}
+                        className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[80vh] "
                     />
-                <img
-                    alt = "Inner Ring"
-                    src={innerring2}
-                    className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[70vh] "
+                    <img
+                        alt="Inner Ring"
+                        src={innerring2}
+                        className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[70vh] "
                     />
 
-                <img
-                    alt = "Inner Ring" src={innerring}
-                    className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[75vh] "
+                    <img
+                        alt="Inner Ring" src={innerring}
+                        className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[75vh] "
                     />
                     <Link to="../Help">
                         <motion.img
-                        whileHover={{scale:1.2}}
-                            alt = "Question" src={question_empty}
+                            whileHover={{ scale: 1.2 }}
+                            alt="Question" src={question_empty}
                             className="absolute bottom-[1rem] right-[1rem] h-[2rem] w-[2rem] cursor-pointer"
-                            />
+                        />
                     </Link>
 
 
-                <div
-                    className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[40vh] w-[40vh] text-blackone">
-                    
-                    <Link to='../DragDropOne'>
-                        <div               
-                            onMouseOver={handleHoverUpper}
-                            onMouseOut={removeHoverUpper}
+                    <div
+                        className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[40vh] w-[40vh] text-blackone">
 
-                            className="relative cursor-pointer">
-                            <div className=" upper-text text-[24px] text-whiteone absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                <span className = "tracking-[2rem]">MAS</span>H
+                        <Link to='../DragDropOne'>
+                            <div
+                                onMouseOver={handleHoverUpper}
+                                onMouseOut={removeHoverUpper}
+
+                                className="relative cursor-pointer">
+                                <div className=" upper-text text-[24px] text-whiteone absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                                    <span className="tracking-[2rem]">MAS</span>H
+                                </div>
+                                <motion.img
+                                    whileHover={{ rotate: 180 }}
+                                    className="upper_semi" src={upper_semi_fill} />
                             </div>
-                            <motion.img
-                            whileHover = {{rotate: 180}}
-                            className = "upper_semi" src={upper_semi_fill}/>
-                        </div>
-                    </Link>
+                        </Link>
 
-                    <Link to='../Login'>
-                        <div               
-                            onMouseOver={handleHoverLower}
-                            onMouseOut={removeHoverLower}
+                        <Link to='../Login'>
+                            <div
+                                onMouseOver={handleHoverLower}
+                                onMouseOut={removeHoverLower}
 
-                            className="relative cursor-pointer">
-                            <div className=" lower-text text-[24px] text-whiteone absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                <span className = "tracking-[2rem]">LOGI</span>N
+                                className="relative cursor-pointer">
+                                <div className=" lower-text text-[24px] text-whiteone absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                                    <span className="tracking-[2rem]">LOGI</span>N
+                                </div>
+                                <motion.img
+                                    whileHover={{ rotate: 180 }}
+                                    className="lower_semi" src={lower_semi_fill} />
                             </div>
-                            <motion.img
-                            whileHover = {{rotate: 180}}
-                            className = "lower_semi" src={lower_semi_fill}/>
-                        </div>
-                    </Link>
+                        </Link>
 
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
     )
-  }
-  
+}
+
 
