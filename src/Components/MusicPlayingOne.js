@@ -17,8 +17,8 @@ export default function MusicPlayingOne() {
             <Link to='../LandingTwo'>
                 <motion.div whileHover={{scale:1.2}} whileTap={{scale:0.9}} className="absolute right-[1rem] top-[1rem] max-w-[2rem]"><img src={home_white} alt=""/></motion.div>
             </Link>
-            <img src={playing_bg_circle} className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" alt=""/>
-            <img src={playing_cd} className="scale-[35%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" alt=""/>
+            <img src={playing_bg_circle} className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" alt="Play button"/>
+            <img src={playing_cd} className="scale-[35%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" alt="Playing CD"/>
             <motion.img
                 whileHover={{scale:1.2}}
                 src={playing_discard_btn}
