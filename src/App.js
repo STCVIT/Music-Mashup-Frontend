@@ -24,9 +24,9 @@ export default function App() {
           <Route path='/Blank' exact element={<Blank />} />
           <Route path='/LandingTwo' exact element={<LandingTwo />} />
           <Route path='/Help' exact element={<Help />} />
-          <Route path='/DragDropOne' exact element={<ProtectedRoute><DragDropOne /></ProtectedRoute>} />
-          <Route path='/MusicPlayingOne' exact element={<ProtectedRoute><MusicPlayingOne /></ProtectedRoute>} />
-          <Route path='/MashingOne' exact element={<ProtectedRoute><MashingOne /></ProtectedRoute>} />
+          <Route path='/DragDropOne' exact element={<DragDropOne />} />
+          <Route path='/MusicPlayingOne' exact element={<MusicPlayingOne />} />
+          <Route path='/MashingOne' exact element={<MashingOne />} />
           <Route path='/Login' exact element={<Login />} />
           <Route path='/Signup' exact element={<Signup />} />
           <Route path='/ResetPassword' exact element={<ResetPassword />} />

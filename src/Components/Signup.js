@@ -62,7 +62,7 @@ export default function Signup() {
 
                     <button type='submit' className="border-solid border-whiteone text-blackone bg-whiteone border-2 rounded-[10px] w-full px-[1.2rem] py-[0.5rem] my-[1rem] font-bold">Sign Up</button>
                 </form>
-                Already have an account? <Link to="../Login" className="font-bold">Login in instead</Link>.
+                Already have an account? <Link to="../Login" className="font-bold">Login in instead</Link>
 
 
                 <motion.img animate={{ rotate: 360 }} transition={{ ease: "linear", duration: 10, repeat: Infinity }} alt="BG Design" src={login_bg_1} className="absolute top-[-20%] left-[-10%] opacity-[5%] h-[70vh]" />
