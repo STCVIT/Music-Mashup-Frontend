@@ -15,61 +15,10 @@ import { motion } from "framer-motion";
 export default function Help() {
     return (
         <div>
-            <motion.div
-                initial={{ opacity: 1 }}
-                animate={{ opacity: 0.2 }}
-                className="bg-whiteone w-screen h-screen opacity-[60%] overflow-hidden">
-                <div className="overflow-hidden">
-
-                    <img
-                        alt="Outer Ring"
-                        src={outerring2}
-                        className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[100vh]"
-                    />
-
-                    <img
-                        alt="Inner Ring"
-                        src={innerring}
-                        className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[80vh] "
-                    />
-
-                    <img
-                        alt=""
-                        src={innerring2}
-                        className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[70vh] "
-                    />
-
-                    <img
-                        alt="Inner Ring" src={innerring}
-                        className=" absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[75vh] "
-                    />
-
-                    <div
-                        className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[40vh] w-[40vh] text-blackone">
-
-                        <div className="relative cursor-pointer">
-                            <div className=" upper-text text-[24px] text-whiteone absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                <span className="tracking-[2rem]">MAS</span>H
-                            </div>
-                            <img alt="" className="upper_semi" src={upper_semi_fill} />
-                        </div>
-
-                        <div
-                            className="relative cursor-pointer">
-                            <div className=" lower-text text-[24px] text-whiteone absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                <span className="tracking-[2rem]">LOGI</span>N
-                            </div>
-                            <img
-                                alt=""
-                                className="lower_semi" src={lower_semi_fill} />
-                        </div>
-                    </div>
-                </div>
-            </motion.div>
 
             <motion.div
                 initial={{x:"-50%",y:"-50%"}}
-                animate={{scale:[0,1]}}
+                animate={{scale:[0,0.8]}}
                 transition={{duration:0.5}}
 
                 className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[90%] z-10">
