@@ -7,6 +7,7 @@ import playing_btn from '../Images/playing_btn.png'
 import home_white from '../Images/home_white.png'
 import { motion } from "framer-motion";
 import BlackScreenAnimation from "./BlackScreenAnimation";
+import user from '../Images/user.png';
 
 export default function MusicPlayingOne() {
 

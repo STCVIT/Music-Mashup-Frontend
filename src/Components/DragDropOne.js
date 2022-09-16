@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from 'framer-motion';
 import { FileUploader } from "react-drag-drop-files";
 import {Link} from "react-router-dom";
 import dragdrop from '../Images/dragdrop-bg.png'
@@ -8,7 +9,7 @@ import mash_btn_inactive from '../Images/mash_btn_inactive.png'
 import home_white from '../Images/home_white.png'
 import search_white from '../Images/search_white.png'
 import search_black from '../Images/search_black.png'
-
+import user from '../Images/user.png';
 
 export default function DragDropOne() {
 
@@ -27,7 +28,7 @@ export default function DragDropOne() {
     return (
         <div className="bg-blackone min-w-screen min-h-screen relative overflow-hidden">
             <Link to='../LandingTwo'>
-                <div className="absolute right-[1rem] top-[1rem] max-w-[2rem]"><img src={home_white}/></div>
+                <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }} className="z-[20] absolute left-[1rem] top-[1rem] max-w-[2rem]"><img src={home_white}/></motion.div>
             </Link>
             <img alt = "BG Design" src={dragdrop} className="absolute"/>
             
@@ -40,7 +41,7 @@ export default function DragDropOne() {
                         value={search}
                         placeholder="Browse on web"
                         onChange={(e) => setSearch(e.target.value)}
-                        className="bg-whiteone px-[0.5rem] text-blackone w-[75%]">
+                        className="outline-none bg-whiteone px-[0.5rem] text-blackone w-[75%]">
                         
             </input>
             </form>
