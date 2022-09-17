@@ -11,10 +11,19 @@ import search_black from "../Images/search_black.png";
 import cdadd from "../Images/cdadd.png";
 import { useUserAuth } from "../context/UserAuthContext";
 
+<<<<<<< HEAD
 import { storage } from "../firebase";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import BlackScreenAnimation from "./BlackScreenAnimation";
+=======
+
+import { storage } from '../firebase';
+import { ref, uploadBytes, listAll, getDownloadURL} from 'firebase/storage';
+import { v4 } from 'uuid';
+import Navbar from "./Navbar";
+
+>>>>>>> 5d322a40298bc71fc0512caf404d6cd6dc1799e4
 
 export default function DragDropOne() {
   // const fileTypes = ["WAV"];
@@ -31,11 +40,32 @@ export default function DragDropOne() {
   const [audioUpload, setAudioUpload] = useState(null);
   const audioListRef = ref(storage, "audio/");
 
+<<<<<<< HEAD
   const uploadAudio = () => {
     if (audioUpload == null) return;
     if (audioList.length > 3) {
       alert("maximum 3 songs only!");
       return;
+=======
+    // const dragStyle=<div className="flex flex-wrap items-center flex-col justify-between h-full w-full"><img alt = "Upload Cloud" src={cloud} className=" max-w-[4rem]"/>Drag and drop your files here</div>
+
+    
+    const [search, setSearch] = useState('');
+    const [audioList, setAudioList] = useState([]);
+    const [audioUpload, setAudioUpload] = useState(null);
+    const audioListRef = ref(storage, 'audio/');
+    const uploadAudio = () => {
+        if(audioUpload == null) return;
+        const audioRef = ref(storage, `audio/${audioUpload.name +"___"+ v4()}`);
+        uploadBytes(audioRef, audioUpload).then((snapshot)=>{
+            getDownloadURL(snapshot).then((url)=>{
+                setAudioList((prev)=>[...prev, url]);
+                alert("audio uploaded!");
+            })
+            
+
+        });
+>>>>>>> 5d322a40298bc71fc0512caf404d6cd6dc1799e4
     }
 
     const audioRef = ref(storage, `audio/${audioUpload.name + "___" + v4()}`);
@@ -47,6 +77,7 @@ export default function DragDropOne() {
     });
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     listAll(audioListRef).then((res) => {
       res.items.forEach((item) => {
@@ -68,6 +99,13 @@ export default function DragDropOne() {
   }, []);
 
   //   const b = document.querySelector(".mash-btn").classList;
+=======
+    return (
+        
+        <div className="bg-blackone min-w-screen min-h-screen relative overflow-hidden">
+            
+            <Navbar />
+>>>>>>> 5d322a40298bc71fc0512caf404d6cd6dc1799e4
 
   return (
     <div>
