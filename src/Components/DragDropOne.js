@@ -17,6 +17,7 @@ import { useUserAuth } from "../context/UserAuthContext";
 import { storage } from '../firebase';
 import { ref, uploadBytes, listAll, getDownloadURL} from 'firebase/storage';
 import { v4 } from 'uuid';
+import Navbar from "./Navbar";
 
 
 export default function DragDropOne() {
@@ -30,7 +31,7 @@ export default function DragDropOne() {
 
     // const dragStyle=<div className="flex flex-wrap items-center flex-col justify-between h-full w-full"><img alt = "Upload Cloud" src={cloud} className=" max-w-[4rem]"/>Drag and drop your files here</div>
 
-    const { user } = useUserAuth();
+    
     const [search, setSearch] = useState('');
     const [audioList, setAudioList] = useState([]);
     const [audioUpload, setAudioUpload] = useState(null);
@@ -63,14 +64,7 @@ export default function DragDropOne() {
         
         <div className="bg-blackone min-w-screen min-h-screen relative overflow-hidden">
             
-            <Link to='../LandingTwo'>
-                <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }} className="z-[20] absolute left-[1rem] top-[1rem] max-w-[2rem]"><img src={home_white}/></motion.div>
-            </Link>
-
-            {/* <Link to='../LandingTwo'> */}
-            <motion.div whileTap={{ scale: 0.9 }} className="absolute flex align-middle gap-2 right-[3rem] top-[1rem] max-w-[3rem] z-[20] "><span className="text-whiteone my-auto">{user ? user.displayName : "LogIn"}</span><img className="rounded-full" src={`${user.photoURL}`} alt={userImg} /></motion.div>
-            {/* </Link> */}
-            {/* user ? userImg : user.photoURL */}
+            <Navbar />
 
             <img alt = "BG Design" src={dragdrop} className="absolute"/>
             
