@@ -1,16 +1,22 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+// import { getAnalytics } from "firebase/analytics";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBRt1v29xcBXiS6gb6nTEOCOhjt9OHMib4",
-  authDomain: "auth-test-413c8.firebaseapp.com",
-  projectId: "auth-test-413c8",
-  storageBucket: "auth-test-413c8.appspot.com",
-  messagingSenderId: "624248380951",
-  appId: "1:624248380951:web:89b1fea599c04363104652",
-  measurementId: "G-5EMLF4JF1G"
+  apiKey: "AIzaSyAWVxfjR-g_8aS2BG_Q8OfPJpvCz9HU_7I",
+  authDomain: "music-mashup-ffb43.firebaseapp.com",
+  projectId: "music-mashup-ffb43",
+  storageBucket: "music-mashup-ffb43.appspot.com",
+  messagingSenderId: "232196038624",
+  appId: "1:232196038624:web:26fa47ec4f1583872a9585",
+  measurementId: "G-09KY6RGVXB"
 };
 
+
 const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 export const auth = getAuth(app);
-export default app;
+
+export const storage = getStorage(app);
+

@@ -30,7 +30,7 @@ export default function App() {
           <Route path='/Login' exact element={<Login />} />
           <Route path='/Signup' exact element={<Signup />} />
           <Route path='/ResetPassword' exact element={<ResetPassword />} />
-      </Routes> 
+      </Routes>
       </AnimatePresence>
       </UserAuthContextProvider>
     </div>

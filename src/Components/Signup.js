@@ -56,11 +56,11 @@ export default function Signup() {
                 </Link>
                 <div className="text-[3rem] mb-[1rem]">Welcome Back</div>
                 <button
-                    className="flex flex-row justify-center items-center border-solid my-[1rem] border-whiteone border-2 rounded-[10px] w-[50%] px-[1.2rem] py-[0.5rem] hover:bg-whiteone hover:text-blackone transition ease-in-out"><img className="mx-[0.5rem] w-[1rem]" src={google} />Sign up with Google</button>
+                    className="flex flex-row justify-center items-center border-solid my-[1rem] border-whiteone border-2 rounded-[10px] w-[30%] px-[1.2rem] py-[0.5rem] hover:bg-whiteone hover:text-blackone transition ease-in-out"><img className="mx-[0.5rem] w-[1rem]" src={google} />Sign up with Google</button>
                 or
 
                 <form onSubmit={handleSubmit}
-                    className="flex flex-col justify-center items-center w-[50%] my-[1rem]"
+                    className="flex flex-col justify-center items-center w-[30%] my-[1rem]"
                 >
                     {/* <input
                         type="text"
@@ -79,7 +79,7 @@ export default function Signup() {
                         required
                         className="px-[1.2rem] py-[0.5rem] bg-blackone text-whiteone rounded-[10px] my-[1rem] border-whiteone border w-full"
                     ></input> */}
-<div className='relative w-full bg-blackone'>
+                    <div className='relative w-full bg-blackone'>
                         <input
                             type="text"
                             value={email}
