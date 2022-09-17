@@ -10,7 +10,9 @@ import mash_btn_inactive from '../Images/mash_btn_inactive.png'
 import home_white from '../Images/home_white.png'
 import search_white from '../Images/search_white.png'
 import search_black from '../Images/search_black.png'
-import user from '../Images/user.png';
+import userImg from '../Images/user.png';
+import { useUserAuth } from "../context/UserAuthContext";
+
 
 import { storage } from '../firebase';
 import { ref, uploadBytes, listAll, getDownloadURL} from 'firebase/storage';
@@ -28,6 +30,7 @@ export default function DragDropOne() {
 
     // const dragStyle=<div className="flex flex-wrap items-center flex-col justify-between h-full w-full"><img alt = "Upload Cloud" src={cloud} className=" max-w-[4rem]"/>Drag and drop your files here</div>
 
+    const { user } = useUserAuth();
     const [search, setSearch] = useState('');
     const [audioList, setAudioList] = useState([]);
     const [audioUpload, setAudioUpload] = useState(null);
@@ -65,9 +68,9 @@ export default function DragDropOne() {
             </Link>
 
             {/* <Link to='../LandingTwo'> */}
-            <motion.div whileTap={{ scale: 0.9 }} className="absolute flex align-middle gap-2 right-[3rem] top-[1rem] max-w-[3rem] z-[20]"><span className="text-whiteone my-auto">Login</span><img src={user} alt="" /></motion.div>
+            <motion.div whileTap={{ scale: 0.9 }} className="absolute flex align-middle gap-2 right-[3rem] top-[1rem] max-w-[3rem] z-[20] "><span className="text-whiteone my-auto">{user ? user.displayName : "LogIn"}</span><img className="rounded-full" src={`${user.photoURL}`} alt={userImg} /></motion.div>
             {/* </Link> */}
-
+            {/* user ? userImg : user.photoURL */}
 
             <img alt = "BG Design" src={dragdrop} className="absolute"/>
             
@@ -85,7 +88,7 @@ export default function DragDropOne() {
             </form>
 
                 <div className = "relative m-[5%] py-[5rem] border-2 rounded-lg border-dashed cursor-pointer">
-                    <div className="">
+                    <div className="flex flex-row justify-center items-center">
                         <input type="file" accept=".wav, .mp3" onChange={(event)=>{setAudioUpload(event.target.files[0])}}/>
                         <button onClick={uploadAudio} className="bg-black px-2 py-1 text-white">
                             Upload Audio
@@ -103,7 +106,7 @@ export default function DragDropOne() {
                     /> */}
                     
                 </div>
-                <div className="displayaudio">
+                <div className="displayaudio flex flex-col justify-center items-center">
                 {audioList && audioList.map((a)=>
                     <div>
                         {console.log(a)}
