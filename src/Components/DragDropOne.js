@@ -76,17 +76,17 @@ export default function DragDropOne() {
   useEffect(() => {
     // console.log("use effect run");
     listAll(audioListRef).then((res) => {
-      // console.log(res.items);
+      
 
       res.items.forEach((item) => {
         const fullname = item.fullPath;
         const temp = fullname.split("__")[0];
         const audioname = temp.slice(6, temp.length);
         getDownloadURL(item).then((audiourl) => {
-          // async await use state - read. promiseall use.
-          //   console.log("url:", url);
+          // me - note : async await use state - read. promiseall use.
+          // console.log("url:", url);
           setAudioList((prev) => [
-            ...prev, // set functions in React do not work asynchronously
+            ...prev, // me - warning : set functions in React do not work asynchronously
             {
               filename: fullname,
               name: audioname,
@@ -191,11 +191,10 @@ export default function DragDropOne() {
             ></input>
           </form>
 
-          {/* The Uploading Arena */}
+          {/* The Uploading Arena */}          
 
-          {/* <div className="relative m-[5%] py-[5rem] border-2 rounded-lg border-dashed cursor-pointer"> */}
           <div className="flex flex-col align-middle text-center justify-center">
-            {/* <div className="flex"> */}
+            
             <input
               type="file"
               accept=".wav, .mp3"
@@ -203,7 +202,7 @@ export default function DragDropOne() {
                 setAudioUpload(event.target.files[0]);
               }}
             />
-            {/* </div> */}
+
 
             <button
               onClick={uploadAudio}              
@@ -222,7 +221,8 @@ export default function DragDropOne() {
                         minSize={2}
                         // children={dragStyle}
                     /> */}
-          {/* </div> */}
+          
+
           <div className="displayaudio grid grid-cols-5">
             {audioList &&
               audioList.map((a) => (
@@ -249,13 +249,12 @@ export default function DragDropOne() {
         </div>
 
         <Link to="../MashingOne">
-          {/* {console.log(b)} */}
-          {/* {audioList.length === 0 && b.classList.add("opacity-50")} */}
+
           <img
             className="max-w-[7rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
             src={audioList.length === 0 ? mash_btn_inactive : mash_btn_active}
           />
-          {/* {audioList.length === 0 ? `CAN'T MASH` : `MASH`} */}
+          
         </Link>
       </div>
     </div>
