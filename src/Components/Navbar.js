@@ -20,7 +20,11 @@ const Navbar = () => {
             <motion.div whileTap={{ scale: 0.9 }} className="absolute flex align-middle gap-2 right-[3rem] top-[1rem] max-w-[3rem] z-[20] mr-10"><span className="text-whiteone my-auto">{user ? user.displayName : "LogIn"}</span><img className="rounded-full" src={`${user.photoURL}`} alt={userImg} /></motion.div>
             {/* </Link> */}
             {/* user ? userImg : user.photoURL */}
+
             
+            
+
+
         </div>
     )
 }

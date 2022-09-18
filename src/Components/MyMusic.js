@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import myMusicCircle from "../Images/myMusicCircle.png"
 import myMusicDisc from "../Images/myMusicDisc.png"
 import myMusicAddButton from "../Images/myMusicAddButton.png"
+import search from '../Images/search.png'
 
 const MyMusic = () => {
     return (
@@ -14,8 +15,9 @@ const MyMusic = () => {
                     name="email"
                     id="email"
                     placeholder='Search your music'
-                    className=" py-[0.8rem] w-[40rem] ml-[35%] rounded-[10px] bg-whitone text-whiteone my-[1rem] border-whiteone border outline-none form_field"
+                    className=" py-[0.7rem] px-[4rem] w-[40rem] ml-[35%] rounded-[10px] bg-whitone text-whiteone my-[1rem] border-whiteone border outline-none form_field"
                     required />
+                    <img src={search} alt="" className='absolute h-8 top-0 left-1/2 transform -translate-x-[17.5rem] translate-y-[1.5rem]' />
 
             </div>
 
