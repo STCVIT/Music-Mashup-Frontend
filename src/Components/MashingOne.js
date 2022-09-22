@@ -3,7 +3,6 @@ import mashing_cd from '../Images/mashing_cd.png'
 import home_black from '../Images/home_black.png'
 import { motion } from "framer-motion";
 import WhiteScreenAnimation from "./WhiteScreenAnimation";
-import BlackScreenAnimation from "./BlackScreenAnimation";
 import user from '../Images/user.png';
 
 export default function MashingOne(props) {
@@ -12,9 +11,7 @@ export default function MashingOne(props) {
         <div>
             <WhiteScreenAnimation/>
         <div className=" min-w-screen min-h-screen relative overflow-hidden text-blackone flex flex-col justify-center items-center">
-            <Link to='../LandingTwo'>
-                <motion.div whileHover={{scale:1.2}} whileTap={{scale:0.9}} className="absolute z-[20] left-[1rem] top-[1rem] max-w-[2rem]"><img src={home_black} alt=""/></motion.div>
-            </Link>
+
             <Link to='../MusicPlayingOne'>
                 <motion.img
                     animate={{rotate:360}}

@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
+import { useUserAuth } from "../context/UserAuthContext";
 import { useState } from "react";
+import Help from "./Help";
+
 import BlackScreenAnimation from "./BlackScreenAnimation";
+import Navbar from "./Navbar";
+
+import google from "../Images/google.png";
 import login_bg_1 from "../Images/login_bg_1.png";
 import login_bg_2 from "../Images/login_bg_2.png";
-import notseen from "../Images/not_seen.png";
-import home_white from "../Images/home_white.png";
-import google from "../Images/google.png";
 import not_seen from "../Images/not_seen.png";
-import seen from "../Images/seen.png";
-import { useUserAuth } from "../context/UserAuthContext";
-import user from "../Images/user.png";
+import question_white from "../Images/question_white.png";
+import question_fill from "../Images/question_fill.png";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -49,105 +51,113 @@ export default function Login() {
     }
   }
 
+  const [helpClick, setHelpClick] = useState(0);
+  function handleHelpClick() {
+    setHelpClick(!helpClick);
+  }
+
   return (
     <div>
       <BlackScreenAnimation />
-      <div className="h-screen w-screen relative z-10 text-whiteone overflow-hidden flex flex-col justify-center items-center">
-        <Link to="../LandingTwo">
-          <motion.div
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-            className="absolute left-[1rem] top-[1rem] max-w-[2rem] z-[20]"
+      <div className="h-screen w-screen absolute text-whiteone overflow-hidden flex flex-col justify-center items-center">
+        <Navbar />
+        <div className="flex flex-col justify-center text-center items-center w-[80%]">
+          <div className="text-2xl md:text-[2.5rem] mb-8">Welcome Back</div>
+          <form
+            onSubmit={handleSubmit}
+            className="lg:w-[45%] md:w-[70%] sm:w-[80%] w-[95%]"
           >
-            <img src={home_white} alt="" />
-          </motion.div>
-        </Link>
-        <div className="text-[3rem] mb-[1rem]">Welcome Back</div>
-        <button
-          onClick={handleGoogleSignIn}
-          className="flex flex-row justify-center items-center border-solid my-[1rem] border-whiteone border-2 rounded-[10px] w-[30%] px-[1.2rem] py-[0.5rem] bg-whiteone font-bold text-blackone transition ease-in-out"
-        >
-          <img className="mx-[0.5rem] w-[1rem]" src={google} />
-          SIGN IN WITH GOOGLE
-        </button>
-        or
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col justify-center items-center w-[30%] my-[1rem]"
-        >
-          <div className="relative w-full bg-blackone">
-            <input
-              type="text"
-              value={email}
-              name="email"
-              id="email"
-              onChange={(e) => setEmail(e.target.value)}
-              className="px-[1.2rem] py-[0.8rem] rounded-[10px] bg-blackone text-whiteone my-[1rem] border-whiteone border outline-none w-full form_field"
-              required
-            />
-            <label
-              for="email"
-              className="absolute rounded-lg left-[50px] px-2 z-10 bg-blackone"
+            <button
+              onClick={handleGoogleSignIn}
+              className="bg-whiteone text-blackone font-black text-sm md:text-lg py-2 rounded-md w-full"
             >
-              Enter your Email
-            </label>
-          </div>
+              <img className="w-[1rem] inline-flex mr-2 mb-1" src={google} />
+              SIGN IN WITH GOOGLE
+            </button>
+            <span className="md:text-lg my-4 block">or</span>
+            <div className="text-left">
+              <input
+                type="text"
+                value={email}
+                name="email"
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                className="form_field bg-blackone text-whiteone md:py-2 border-whiteone border rounded-md outline-none  md:text-xl px-2 py-2 w-full"
+                required
+              />
+              <label
+                forHTML="email"
+                className="text-sm md:text-lg bg-blackone relative bottom-[3.45rem] left-5 md:bottom-[3.8rem]"
+              >
+                Enter your Email
+              </label>
+            </div>
+            <div className="text-left">
+              <input
+                value={password}
+                type="password"
+                id="password"
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="form_field bg-blackone text-whiteone border-whiteone border rounded-md outline-none  px-2 py-2 w-full md:text-xl"
+              />
 
-          <div className="relative w-full bg-blackone">
-            <input
-              value={password}
-              type="password"
-              id="password"
-              name="password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="px-[1.2rem] py-[0.8rem] rounded-[10px] bg-blackone text-whiteone my-[1rem] border-whiteone border outline-none w-full form_field"
-            />
-            <label
-              for="password"
-              className="absolute rounded-lg left-[50px] z-10 px-2 bg-blackone"
+              <label
+                forHTML="password"
+                className="text-sm md:text-lg bg-blackone relative bottom-[3.45rem] md:bottom-[3.8rem] left-5"
+              >
+                Enter your Password
+              </label>
+              <img
+                alt="Show Password"
+                className="password_eye w-[1.5rem] relative left-[90%] md:left-[93%] bottom-[3.25rem] md:bottom-[3.9rem]"
+                src={not_seen}
+                onClick={handlePasswordEye}
+              />
+              <span className="relative bottom-[2.5rem] block text-right text-sm md:text-lg">
+                <Link to="../ResetPassword">Reset Password</Link>
+              </span>
+            </div>
+            <button
+              type="submit"
+              className="bg-whiteone text-blackone font-black md:text-lg text-sm py-2 rounded-md w-full"
             >
-              Enter your Password
-            </label>
-            <Link
-              to="../ResetPassword"
-              className="text-[0.8rem] align-top ml-[80%]"
-            >
-              Reset Password
+              SIGN IN
+            </button>
+          </form>
+          <div className="md:text-xl my-2">
+            Haven't signed up yet?
+            <Link to="../Signup" className="font-bold block md:text-xl my-2">
+              Create an account
             </Link>
-            <img
-              alt="Show Password"
-              className="password_eye absolute max-w-[1.5rem] top-[30%] right-[20px] "
-              src={not_seen}
-              onClick={handlePasswordEye}
-            />
           </div>
+        </div>
 
-          <button
-            type="submit"
-            className="border-solid border-whiteone text-blackone bg-whiteone border-2 rounded-[10px] w-full px-[1.2rem] py-[0.5rem] my-[1rem] font-bold"
-          >
-            SIGN IN
-          </button>
-        </form>
-        Haven't signed up yet?{" "}
-        <Link to="../Signup" className="font-bold">
-          Create an account
-        </Link>
         <motion.img
           animate={{ rotate: 360 }}
           transition={{ ease: "linear", duration: 10, repeat: Infinity }}
           alt="BG Design"
           src={login_bg_1}
-          className="absolute top-[-20%] left-[-10%] opacity-[5%] h-[70vh]"
+          className="absolute top-[-20%] left-[-10%] opacity-[5%]  md:w-[50vh] w-[40vh]"
         />
         <motion.img
           animate={{ rotate: -360 }}
           transition={{ ease: "linear", duration: 20, repeat: Infinity }}
           alt="BG Design"
           src={login_bg_2}
-          className="absolute bottom-[-20%] right-[-10%] opacity-[5%] h-[70vh]"
+          className="absolute bottom-[-10%] right-[-10%] opacity-[5%] md:w-[70vh] w-[50vh]"
         />
+      <motion.img
+        whileHover={{ scale: 1.2 }}
+        alt="Question"
+        src={helpClick ? question_fill : question_white}
+        onClick={handleHelpClick}
+        className="z-40 absolute bottom-[1rem] right-[1rem] w-[2rem] cursor-pointer"
+      />
+      <div className={helpClick ? "absolute block z-100" : "hidden"}>
+        <Help />
+      </div>
       </div>
     </div>
   );

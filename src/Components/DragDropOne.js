@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { FileUploader } from "react-drag-drop-files";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
 import dragdrop from "../Images/dragdrop-bg.png";
 import cloud from "../Images/cloud.png";
 import dustbin_inactive from "../Images/dustbin_inactive.png";
 import dustbin_active from "../Images/dustbin_active.png";
 import mash_btn_inactive from "../Images/mash_btn_inactive.png";
 import mash_btn_active from "../Images/mash_btn_active.png";
-import home_white from "../Images/home_white.png";
+import question_white from "../Images/question_white.png";
+import question_fill from "../Images/question_fill.png";
+
 import search_black from "../Images/search_black.png";
 import cdadd from "../Images/cdadd.png";
 import youtube from "../Images/youtube.png";
@@ -25,6 +28,7 @@ import {
 import { v4 } from "uuid";
 import Navbar from "./Navbar";
 import BlackScreenAnimation from "./BlackScreenAnimation";
+import Help from "./Help";
 
 export default function DragDropOne() {
   // const fileTypes = ["WAV"];
@@ -97,23 +101,9 @@ export default function DragDropOne() {
     });
   }, []);
 
-  //   const b = document.querySelector(".mash-btn").classList;
-
-  // addEventListener('beforeunload', (event) => {
-
   // });
   function handleDelete() {
     console.log("delete button pressed");
-    // audioList.map((eachAudio)=>{
-    //   var storageRef = ref(storage, eachAudio.filename);
-    //   deleteObject(storageRef)
-    //   .then(() => {
-    //     console.log("deleted all files");
-    //   })
-    //   .catch((error) => {
-    //     console.log("error: ", error);
-    //   });
-    // })
   }
 
   onbeforeunload = (event) => {
@@ -131,66 +121,36 @@ export default function DragDropOne() {
     });
   };
 
-  // storageRef.listAll().then((res) => {
-  //   res.forEach((item) => {
-  //     console.log(item);
-  //   });
-  // }).catch((e)=>{
-  //   console.log("errors: ",e);
-  // });
+  const [helpClick, setHelpClick] = useState(0);
+  function handleHelpClick() {
+    setHelpClick(!helpClick);
+  }
 
   return (
     <div>
       <BlackScreenAnimation />
-      {/* <Navbar /> */}
-      <div className="bg-blackone min-w-screen min-h-screen relative overflow-hidden">
-        <Link to="../LandingTwo">
-          {/* <div id="modal" className="absolute left-[50%] translate-x-[-50%] top-[2rem] z-50 bg-whiteone rounded-lg flex justify-center text-center px-5 py-2">
-          <div className="font-bold my-auto">LOADING ...</div>
-        </div> */}
+      <Navbar />
+      <div className="h-screen w-screen text-whiteone overflow-hidden flex flex-col justify-center items-center">
+        <img
+          alt="BG Design"
+          src={dragdrop}
+          className="absolute top-0 left-[-25vh]"
+        />
 
-          <motion.div
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-            className="z-[20] absolute left-[1rem] top-[1rem] max-w-[2rem]"
-          >
-            <img src={home_white} />
-          </motion.div>
-        </Link>
-
-        {/* <Link to='../LandingTwo'> */}
-        {/* <motion.div
-          whileTap={{ scale: 0.9 }}
-          className="absolute flex align-middle gap-2 right-0 top-[1rem] z-[20] "
-        >
-          <span className="text-whiteone my-auto">
-            {user ? user.displayName : "LogIn"}
-          </span>
-          <img
-            className="rounded-full w-[30%] h-[30%]"
-            src={`${user.photoURL}`}
-            alt="user img"
-          />
-        </motion.div> */}
-        {/* </Link> */}
-        {/* user ? userImg : user.photoURL */}
-
-        <img alt="BG Design" src={dragdrop} className="absolute" />
-
-        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 rounded-lg min-h-[60%] w-[50%] text-whiteone p-5">
+        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 rounded-lg min-h-[60%] lg:w-[50%] md:w-[70%] w-[90%] text-whiteone p-5">
           {/* Search on Youtube */}
 
-          <form className="justify-between bg-whiteone text-blackone px-[0.5rem] py-[0.5rem] mb-[1rem] rounded-lg flex flex-wrap">
+          <form className="justify-between bg-whiteone text-blackone px-[0.5rem] py-[0.5rem] mb-[1rem] rounded-md flex">
             <img
               src={youtube}
-              className="max-w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
+              className="sm:w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
             />
             <input
               type="text"
               value={search}
               placeholder="Get music from Youtube"
               onChange={(e) => setSearch(e.target.value)}
-              className="outline-none bg-whiteone px-[0.5rem] text-blackone w-[75%]"
+              className="text-sm md:text-lg font-black outline-none bg-whiteone text-blackone w-[75%]"
             ></input>
             <img
               src={search_black}
@@ -211,7 +171,7 @@ export default function DragDropOne() {
 
             <button
               onClick={uploadAudio}
-              className="my-5 mx-[30%] border-whiteone border-2 hover:bg-whiteone hover:text-blackone rounded-lg px-2 py-1 text-white font-bold"
+              className="my-5 mx-[30%] border-whiteone border-2 hover:bg-whiteone hover:text-blackone rounded-lg px-2 py-1 text-white font-bold text-sm sm:text-md"
             >
               Upload Audio
             </button>
@@ -254,10 +214,20 @@ export default function DragDropOne() {
 
         <Link to="../MashingOne">
           <img
-            className="max-w-[7rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
+            className="md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
             src={audioList.length === 0 ? mash_btn_inactive : mash_btn_active}
           />
         </Link>
+        <motion.img
+          whileHover={{ scale: 1.2 }}
+          alt="Question"
+          src={helpClick ? question_fill : question_white}
+          onClick={handleHelpClick}
+          className="z-40 absolute bottom-[1rem] right-[1rem] w-[2rem] cursor-pointer"
+        />
+        <div className={helpClick ? "block z-30" : "hidden"}>
+          <Help />
+        </div>
       </div>
     </div>
   );
