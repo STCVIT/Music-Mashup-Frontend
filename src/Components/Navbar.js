@@ -8,9 +8,11 @@ import userImg from "../Images/user.png";
 const Navbar = () => {
   const { user } = useUserAuth();
 
+  
+
   return (
     <div className="flex justify-between absolute z-10 top-0 w-full bg-blackone md:py-4 p-2 drop-shadow-2xl">
-      <Link to="../LandingTwo" className="md:w-[2rem] w-[1.5rem]">
+      <Link to="../LandingTwo" className="md:w-[2rem] w-[1.5rem] ml-2">
         <motion.img
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
@@ -18,7 +20,7 @@ const Navbar = () => {
           className=""
         />
       </Link>
-      <Link to="" className="md:w-[2.5rem] w-[2rem]">
+      <Link to="" className="md:w-[2.5rem] w-[2rem] order-last">
         <motion.img
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
@@ -26,6 +28,8 @@ const Navbar = () => {
           className=""
         />
       </Link>
+
+      
 
       {/* <motion.div
         whileTap={{ scale: 0.9 }}
@@ -42,6 +46,8 @@ const Navbar = () => {
       </motion.div> */}
     </div>
   );
+
+  
 };
 
 export default Navbar;
