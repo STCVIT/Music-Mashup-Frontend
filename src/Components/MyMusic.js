@@ -4,6 +4,7 @@ import myMusicCircle from "../Images/myMusicCircle.png"
 import myMusicDisc from "../Images/myMusicDisc.png"
 import myMusicAddButton from "../Images/myMusicAddButton.png"
 import search from '../Images/search.png'
+import WhiteScreenAnimation from './WhiteScreenAnimation'
 
 const MyMusic = () => {
 
@@ -11,6 +12,7 @@ const MyMusic = () => {
 
     return (
         <div className="min-h-screen">
+            <WhiteScreenAnimation />
             {/* <div className='bg-blackone h-[5rem] '>
                 <Navbar />
                 <input
@@ -33,7 +35,7 @@ const MyMusic = () => {
                 <img src={myMusicAddButton} alt="" className='absolute top-1/2 left-1/2 transform -translate-x-[-1.2rem] -translate-y-[-1.2rem] z-10 ' />
             </div>
 
-        <form className="search-bar px-4 absolute z-20 top-3 left-1/2 transform translate-x-[-12rem]">
+        <form className="search-bar px-4 absolute z-10 top-3.5 left-1/2 transform translate-x-[-12rem]">
             <div className="relative">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

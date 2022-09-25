@@ -7,9 +7,15 @@ import userImg from "../Images/user.png";
 import { Menu, Transition } from "@headlessui/react";
 
 const Navbar = () => {
-  const { user } = useUserAuth();
 
-
+  const { user,logOut } = useUserAuth();
+    const handleLogOut = async ()=>{
+        try{
+            await logOut();
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
 
   return (
     <div className="flex justify-between absolute z-10 top-0 w-full bg-blackone md:py-4 p-2 drop-shadow-2xl">
@@ -21,7 +27,7 @@ const Navbar = () => {
           className=""
         />
       </Link>
-      <div className="md:w-[2.5rem] w-[2rem] order-last flex flex-row mr-16">
+      <div className="md:w-[2.5rem] w-[2rem] order-last flex flex-row mr-24">
         <img
           className="rounded-full"
           src={user ? user.photoUrl : userImg}
@@ -63,22 +69,22 @@ const Navbar = () => {
                   <div className="px-4 py-3">
                     <p className="text-sm leading-5">Signed in as</p>
                     <p className="text-sm font-medium leading-5 text-whitone truncate">
-                      {user.email}
+                      {user ? user.email : "Not signed in"}
                     </p>
                   </div>
 
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#account-settings"
+                        <Link
+                          to="/MyMusic"
                           className={`${active
                             ? "bg-gray-100 text-blackone"
                             : "text-whitone"
                             } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                         >
-                          Account settings
-                        </a>
+                          My music
+                        </Link>
                       )}
                     </Menu.Item>
                   </div>
@@ -86,15 +92,15 @@ const Navbar = () => {
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#sign-out"
+                        <button
+                          onClick={handleLogOut}
                           className={`${active
-                            ? "bg-gray-100 text-whitone"
+                            ? "bg-gray-100 text-blackone"
                             : "text-whitone"
                             } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                         >
                           Sign out
-                        </a>
+                        </button>
                       )}
                     </Menu.Item>
                   </div>
