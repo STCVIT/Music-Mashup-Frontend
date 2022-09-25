@@ -5,6 +5,7 @@ import myMusicDisc from "../Images/myMusicDisc.png"
 import myMusicAddButton from "../Images/myMusicAddButton.png"
 import search from '../Images/search.png'
 import WhiteScreenAnimation from './WhiteScreenAnimation'
+import { Link } from 'react-router-dom'
 
 const MyMusic = () => {
 
@@ -30,12 +31,14 @@ const MyMusic = () => {
             <img src={myMusicCircle} alt="" className="absolute right-0 bottom-0" />
 
             <div className=''>
-                <h1 className='text-blackone absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[7rem] text-4xl z-10 '>You haven't created any music yet!</h1>
+                <h1 className='text-blackone absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[7rem] text-sm z-10 md:text-3xl'>You haven't created any music yet!</h1>
                 <img src={myMusicDisc} alt="" className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 ' />
+                <Link to="/DragDropOne">
                 <img src={myMusicAddButton} alt="" className='absolute top-1/2 left-1/2 transform -translate-x-[-1.2rem] -translate-y-[-1.2rem] z-10 ' />
+                </Link>
             </div>
 
-        <form className="search-bar px-4 absolute z-10 top-3.5 left-1/2 transform translate-x-[-12rem]">
+        <form className="search-bar px-4 absolute z-10 top-3.5 left-1/2 transform translate-x-[-12rem] hidden md:block">
             <div className="relative">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -144,6 +144,7 @@ export default function DragDropOne() {
             <img
               src={youtube}
               className="sm:w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
+              alt=""
             />
             <input
               type="text"
@@ -155,6 +156,7 @@ export default function DragDropOne() {
             <img
               src={search_black}
               className="max-w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
+              alt=""
             />
           </form>
 
@@ -198,7 +200,7 @@ export default function DragDropOne() {
                   src={a.url}
                   type="audio/wav"
                 ></audio> */}
-                  <img src={cdadd} />
+                  <img src={cdadd} alt="" />
                   <div className="text-whiteone text-[0.8rem]">{a.name}</div>
                 </div>
               ))}
@@ -216,6 +218,7 @@ export default function DragDropOne() {
           <img
             className="md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
             src={audioList.length === 0 ? mash_btn_inactive : mash_btn_active}
+            alt=""
           />
         </Link>
         <motion.img
