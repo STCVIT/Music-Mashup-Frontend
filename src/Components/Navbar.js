@@ -5,17 +5,12 @@ import { useUserAuth } from "../context/UserAuthContext";
 import home_white from "../Images/home_white.png";
 import userImg from "../Images/user.png";
 import { Menu, Transition } from "@headlessui/react";
+import Logout from "./Logout";
+import LoginButton from "./LoginButton";
 
 const Navbar = () => {
 
-  const { user,logOut } = useUserAuth();
-    const handleLogOut = async ()=>{
-        try{
-            await logOut();
-        } catch (err) {
-            console.log(err.message);
-        }
-    }
+  const { user } = useUserAuth();
 
   return (
     <div className="flex justify-between absolute z-10 top-0 w-full bg-blackone md:py-4 p-2 drop-shadow-2xl">
@@ -73,7 +68,7 @@ const Navbar = () => {
                     </p>
                   </div>
 
-                  <div className="py-1">
+                  {user && <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
                         <Link
@@ -87,22 +82,11 @@ const Navbar = () => {
                         </Link>
                       )}
                     </Menu.Item>
-                  </div>
+                  </div>}
 
                   <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          onClick={handleLogOut}
-                          className={`${active
-                            ? "bg-gray-100 text-blackone"
-                            : "text-whitone"
-                            } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                        >
-                          Sign out
-                        </button>
-                      )}
-                    </Menu.Item>
+                    {user && <Logout />}
+                    {!user && <LoginButton />}
                   </div>
                 </Menu.Items>
               </Transition>
