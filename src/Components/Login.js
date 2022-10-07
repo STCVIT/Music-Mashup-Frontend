@@ -22,6 +22,7 @@ export default function Login() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("useuserauth",useUserAuth);
     try {
       await signIn(email, password);
       navigate("/DragDropOne");
@@ -148,16 +149,16 @@ export default function Login() {
           src={login_bg_2}
           className="absolute bottom-[-10%] right-[-10%] opacity-[5%] md:w-[70vh] w-[50vh]"
         />
-      <motion.img
-        whileHover={{ scale: 1.2 }}
-        alt="Question"
-        src={helpClick ? question_fill : question_white}
-        onClick={handleHelpClick}
-        className="z-40 absolute bottom-[1rem] right-[1rem] w-[2rem] cursor-pointer"
-      />
-      <div className={helpClick ? "absolute block z-100" : "hidden"}>
-        <Help />
-      </div>
+        <motion.img
+          whileHover={{ scale: 1.2 }}
+          alt="Question"
+          src={helpClick ? question_fill : question_white}
+          onClick={handleHelpClick}
+          className="z-40 absolute bottom-[1rem] right-[1rem] w-[2rem] cursor-pointer"
+        />
+        <div className={helpClick ? "absolute block z-100" : "hidden"}>
+          <Help />
+        </div>
       </div>
     </div>
   );

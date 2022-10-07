@@ -12,6 +12,7 @@ import { UserAuthContextProvider } from "./context/UserAuthContext";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import ResetPassword from "./Components/ResetPassword";
 import MyMusic from "./Components/MyMusic";
+import YTfeature from "./Components/YTfeature";
 
 export default function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/Signup" exact element={<Signup />} />
             <Route path="/ResetPassword" exact element={<ResetPassword />} />
             <Route path="/MyMusic" exact element={<MyMusic />} />
+            <Route path="/YTfeature" exact element={<YTfeature />} />
           </Routes>
         </AnimatePresence>
       </UserAuthContextProvider>

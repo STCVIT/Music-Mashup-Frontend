@@ -11,7 +11,6 @@ export default function LandingOne() {
             <motion.div
             className="min-w-screen min-h-screen bg-blackone flex">                            
                 <Link to='./LandingTwo' className="m-auto z-20">
-                {/* <Link to='./Blank' className="m-auto z-20"> */}
                 <motion.img
                 src={pageone_circle}
                 className="max-h-[2rem] max-w-[2rem]"

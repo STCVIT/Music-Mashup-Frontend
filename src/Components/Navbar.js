@@ -15,15 +15,18 @@ const Navbar = () => {
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
           src={home_white}
-          className=""
+          className="my-auto mx-5"
         />
       </Link>
-      <Link to="" className="md:w-[2.5rem] w-[2rem]">
+      <Link to="" className="text-whiteone my-auto mx-5 flex flex-row">
+        <span className="my-auto mx-2">
+          {user ? user.displayName : "LogIn"}
+        </span>
         <motion.img
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
           src={user ? user.photoUrl : userImg}
-          className=""
+          className="md:w-[2.5rem] w-[2rem]"
         />
       </Link>
 

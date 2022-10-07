@@ -11,8 +11,6 @@ import mash_btn_inactive from "../Images/mash_btn_inactive.png";
 import mash_btn_active from "../Images/mash_btn_active.png";
 import question_white from "../Images/question_white.png";
 import question_fill from "../Images/question_fill.png";
-
-import search_black from "../Images/search_black.png";
 import cdadd from "../Images/cdadd.png";
 import youtube from "../Images/youtube.png";
 import { useUserAuth } from "../context/UserAuthContext";
@@ -40,7 +38,7 @@ export default function DragDropOne() {
   // const dragStyle=<div className="flex flex-wrap items-center flex-col justify-between h-full w-full"><img alt = "Upload Cloud" src={cloud} className=" max-w-[4rem]"/>Drag and drop your files here</div>
 
   const { user } = useUserAuth();
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
   const [audioList, setAudioList] = useState([]);
   const [audioUpload, setAudioUpload] = useState(null);
   const audioListRef = ref(storage, "audio/");
@@ -54,6 +52,7 @@ export default function DragDropOne() {
     console.log("uploading file...");
 
     const audioRef = ref(storage, `audio/${audioUpload.name + "___" + v4()}`);
+    localStorage.setItem("audio-ref", JSON.stringify(audioRef));
     uploadBytes(audioRef, audioUpload).then((snapshot) => {
       console.log("uploaded: ", snapshot.metadata);
       // const fullname = item.fullPath;
@@ -138,9 +137,17 @@ export default function DragDropOne() {
         />
 
         <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 rounded-lg min-h-[60%] lg:w-[50%] md:w-[70%] w-[90%] text-whiteone p-5">
-          {/* Search on Youtube */}
-
-          <form className="justify-between bg-whiteone text-blackone px-[0.5rem] py-[0.5rem] mb-[1rem] rounded-md flex">
+          {/* Button for searching on Youtube */}
+          <Link to="/YTfeature">
+          <div className="border-2 border-whiteone rounded-md flex px-[0.5rem] py-[0.5rem] mb-[1rem]  text-whiteone hover:bg-whiteone hover:text-blackone duration-[800ms] cursor-pointer">
+            <img
+              src={youtube}
+              className="sm:w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
+            />
+            Get Music from Youtube
+          </div>
+          </Link>
+          {/* <form className="justify-between bg-whiteone text-blackone px-[0.5rem] py-[0.5rem] mb-[1rem] rounded-md flex">
             <img
               src={youtube}
               className="sm:w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
@@ -156,7 +163,7 @@ export default function DragDropOne() {
               src={search_black}
               className="max-w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
             />
-          </form>
+          </form> */}
 
           {/* The Uploading Arena */}
 
