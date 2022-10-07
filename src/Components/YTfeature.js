@@ -9,9 +9,9 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { v4 } from "uuid";
-import { storage } from "../firebase";
-import { ref, uploadBytes } from "firebase/storage";
+// import { v4 } from "uuid";
+// import { storage } from "../firebase";
+// import { ref, uploadBytes } from "firebase/storage";
 import BlackScreenAnimation from "./BlackScreenAnimation";
 import dragdrop from "../Images/dragdrop-bg.png";
 import search_black from "../Images/search_black.png";
@@ -26,7 +26,7 @@ export default function YTfeature() {
   const [audioList_YT, setAudioList_YT] = useState([]);
 
   const API_KEY = "AIzaSyCNwlyKFyVNrX8evy9Y4CnazgoD8Zo_Efc";
-  const maxResults = 5;
+  const maxResults = 10;
   const topics = "/m/04rlf";
   let url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&regionCode=US&maxResults=${maxResults}&topicId=${topics}&q=${search}`;
 
@@ -96,28 +96,28 @@ export default function YTfeature() {
     }
   }
 
-  function handleUpload_YT() {
-    // const audioRef_YT = JSON.parse(localStorage.getItem("audio-ref"));
+  // function handleUpload_YT() {
+  //   // const audioRef_YT = JSON.parse(localStorage.getItem("audio-ref"));
 
-    audioList_YT
-      ? audioList_YT.map((eachAudio) => {
-          var audioRef_YT = ref(
-            storage,
-            `audio/${eachAudio.aname + "__" + v4()}`
-          );
-          uploadBytes(audioRef_YT, eachAudio.link)
-            .then((snapshot) => {
-              console.log("uploaded: ", snapshot.metadata);
-              alert("audio uploaded!");
-              navigate("/DragDropOne");
-            })
+  //   audioList_YT
+  //     ? audioList_YT.map((eachAudio) => {
+  //         var audioRef_YT = ref(
+  //           storage,
+  //           `audio/${eachAudio.aname + "__" + v4()}`
+  //         );
+  //         uploadBytes(audioRef_YT, eachAudio.link)
+  //           .then((snapshot) => {
+  //             console.log("uploaded: ", snapshot.metadata);
+  //             alert("audio uploaded!");
+  //             navigate("/DragDropOne");
+  //           })
 
-            .catch((error) => {
-              console.log("error: ", error);
-            });
-        })
-      : alert("no songs selected. press back to return");
-  }
+  //           .catch((error) => {
+  //             console.log("error: ", error);
+  //           });
+  //       })
+  //     : alert("no songs selected. press back to return");
+  // }
 
   return (
     <div>
@@ -129,7 +129,7 @@ export default function YTfeature() {
           src={dragdrop}
           className="absolute top-0 left-[-25vh]"
         />
-        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 rounded-lg min-h-[60%] lg:w-[50%] md:w-[70%] w-[90%] text-whiteone p-5">
+        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 rounded-lg h-[60vh] lg:w-[50vw] md:w-[70vw] w-[90vw] text-whiteone p-5 overflow-y-scroll">
           <form className="justify-between bg-whiteone text-blackone px-[0.5rem] py-[0.5rem] mb-[1rem] rounded-md flex">
             <img
               src={youtube}
@@ -149,39 +149,48 @@ export default function YTfeature() {
               className="cursor-pointer hover:scale-[1.2] duration-[300ms] max-w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
             />
           </form>
-          <img
-            className="cursor-pointer md:w-[7rem] w-[6rem] absolute bottom-2 right-2"
-            onClick={handleUpload_YT}
-            src={audioList_YT.length === 0 ? done_inactive : done_active}
-          />
-
+          {!search && (
+            <div>
+              Download as much music as you like from youtube, on this page.
+              Then, hop over to the previous page and upload it for mashing!
+            </div>
+          )}
           {all_details &&
             all_details.map((each) => (
               <div className="border-2 border-whiteone px-5 my-2 flex flex-row justify-between">
                 <div className="text-md my-auto">{each.title}</div>
-                <div
-                  className="cursor-pointer text-3xl my-auto"
-                  onClick={() => {
-                    console.log("song " + each.title + " added");
-                    console.log("list is now: ", audioList_YT);
-                    setAudioList_YT((prev) => [
-                      ...prev,
-                      {
-                        aname: each.title,
-                        link: each.link,
-                      },
-                    ]);
-                  }}
+                <a
+                  className="cursor-pointer text-3xl my-auto no-underline"
+                  href={each.link}
+                  target="_blank"
+                  // onClick={() => {
+                  //   console.log("song " + each.link + " added");
+                  //   console.log("list is now: ", audioList_YT);
+                  //   setAudioList_YT((prev) => [
+                  //     ...prev,
+                  //     {
+                  //       aname: each.title,
+                  //       link: each.link,
+                  //     },
+                  //   ]);
+                  // }}
                 >
                   +
-                </div>
+                </a>
               </div>
             ))}
         </div>
-        <Link to="../DragDropOne">
+        {/* <Link to="../DragDropOne">
           <div className="font-bold px-10 py-2 rounded-md bg-whiteone text-blackone absolute bottom-10 left-[50%] translate-x-[-50%]">
             BACK
           </div>
+        </Link> */}
+        <Link to="../DragDropOne">
+          <img
+            className="cursor-pointer md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
+            // onClick={handleUpload_YT}
+            src={audioList_YT.length === 0 ? done_inactive : done_active}
+          />
         </Link>
       </div>
     </div>

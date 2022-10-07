@@ -139,13 +139,13 @@ export default function DragDropOne() {
         <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 rounded-lg min-h-[60%] lg:w-[50%] md:w-[70%] w-[90%] text-whiteone p-5">
           {/* Button for searching on Youtube */}
           <Link to="/YTfeature">
-          <div className="border-2 border-whiteone rounded-md flex px-[0.5rem] py-[0.5rem] mb-[1rem]  text-whiteone hover:bg-whiteone hover:text-blackone duration-[800ms] cursor-pointer">
-            <img
-              src={youtube}
-              className="sm:w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
-            />
-            Get Music from Youtube
-          </div>
+            <div className="border-2 border-whiteone rounded-md flex px-[0.5rem] py-[0.5rem] mb-[1rem]  text-whiteone hover:bg-whiteone hover:text-blackone duration-[800ms] cursor-pointer">
+              <img
+                src={youtube}
+                className="sm:w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
+              />
+              Get Music from Youtube
+            </div>
           </Link>
           {/* <form className="justify-between bg-whiteone text-blackone px-[0.5rem] py-[0.5rem] mb-[1rem] rounded-md flex">
             <img
