@@ -72,7 +72,7 @@ export default function Login() {
               onClick={handleGoogleSignIn}
               className="bg-whiteone text-blackone font-black text-sm md:text-lg py-2 rounded-md w-full"
             >
-              <img className="w-[1rem] inline-flex mr-2 mb-1" src={google} />
+              <img className="w-[1rem] inline-flex mr-2 mb-1" src={google} alt="" />
               SIGN IN WITH GOOGLE
             </button>
             <span className="md:text-lg my-4 block">or</span>
