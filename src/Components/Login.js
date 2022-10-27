@@ -6,7 +6,6 @@ import Help from "./Help";
 
 import BlackScreenAnimation from "./BlackScreenAnimation";
 import Navbar from "./Navbar";
-
 import google from "../Images/google.png";
 import login_bg_1 from "../Images/login_bg_1.png";
 import login_bg_2 from "../Images/login_bg_2.png";

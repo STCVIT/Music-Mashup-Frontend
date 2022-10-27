@@ -14,8 +14,8 @@ import question_fill from "../Images/question_fill.png";
 import cdadd from "../Images/cdadd.png";
 import youtube from "../Images/youtube.png";
 import { useUserAuth } from "../context/UserAuthContext";
-
-import { storage } from "../firebase";
+import { storage, fstore } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 import {
   ref,
   uploadBytes,
@@ -29,19 +29,14 @@ import BlackScreenAnimation from "./BlackScreenAnimation";
 import Help from "./Help";
 
 export default function DragDropOne() {
-  // const fileTypes = ["WAV"];
-  // const [file, setFile] = useState(null);
-  // const handleChange = (file) => {
-  //   setFile(file);
-  // };
+  const { user, token } = useUserAuth();
+  console.log("token from dragdrop1: ", token);
 
-  // const dragStyle=<div className="flex flex-wrap items-center flex-col justify-between h-full w-full"><img alt = "Upload Cloud" src={cloud} className=" max-w-[4rem]"/>Drag and drop your files here</div>
-
-  const { user } = useUserAuth();
-  // const [search, setSearch] = useState("");
   const [audioList, setAudioList] = useState([]);
   const [audioUpload, setAudioUpload] = useState(null);
-  const audioListRef = ref(storage, "audio/");
+  const [foldername, setFoldername] = useState("audio_" + token);
+  console.log("foldername is " + foldername);
+  const audioListRef = ref(storage, `${foldername}/`);
 
   const uploadAudio = () => {
     if (audioUpload == null) return;
@@ -50,26 +45,29 @@ export default function DragDropOne() {
       return;
     }
     console.log("uploading file...");
-
-    const audioRef = ref(storage, `audio/${audioUpload.name + "___" + v4()}`);
+    // const audioname = audioUpload.name + "___" + v4();
+    const audioname = audioUpload.name;
+    console.log("audio name: ", audioname);
+    const audioRef = ref(storage, `${foldername}/${audioname}`);
     localStorage.setItem("audio-ref", JSON.stringify(audioRef));
     uploadBytes(audioRef, audioUpload).then((snapshot) => {
       console.log("uploaded: ", snapshot.metadata);
-      // const fullname = item.fullPath;
-      // const temp = fullname.split("__")[0];
-      // const audioname = temp.slice(6, temp.length);
       getDownloadURL(snapshot.ref)
         .then((urll) => {
-          setAudioList((prev) => [
-            ...prev,
-            // {
-            //   filename: fullname,
-            //   name: audioname,
-            //   url: urll,
-            // },
-            urll,
-          ]);
-          alert("audio uploaded!");
+          setAudioList((prev) => [...prev, urll]);
+          alert("audio uploaded to storage!");
+
+          // storing url in firestore
+          const set_in_firestore = async () => {
+            const docRef = doc(fstore, foldername, audioname);
+            const p = {
+              url: urll.toString(),
+            };
+            await setDoc(docRef, p);
+            alert("stored in firestore!");
+          };
+
+          set_in_firestore();
         })
         .catch((error) => {
           console.log("error: ", error);
@@ -82,16 +80,19 @@ export default function DragDropOne() {
     listAll(audioListRef).then((res) => {
       res.items.forEach((item) => {
         const fullname = item.fullPath;
-        const temp = fullname.split("__")[0];
-        const audioname = temp.slice(6, temp.length);
+        // console.log(fullname);
+        // const temp = fullname.split("__")[0];
+        const audioname2 = fullname.split("/")[1];
+        // const audioname2 = temp.slice(6, temp.length);
         getDownloadURL(item).then((audiourl) => {
           // me - note : async await use state - read. promiseall use.
           // console.log("url:", url);
+          // me - warning : set functions in React do not work asynchronously
           setAudioList((prev) => [
-            ...prev, // me - warning : set functions in React do not work asynchronously
+            ...prev,
             {
               filename: fullname,
-              name: audioname,
+              name: audioname2,
               url: audiourl,
             },
           ]);
@@ -100,7 +101,6 @@ export default function DragDropOne() {
     });
   }, []);
 
-  // });
   function handleDelete() {
     console.log("delete button pressed");
   }
@@ -147,25 +147,6 @@ export default function DragDropOne() {
               Get Music from Youtube
             </div>
           </Link>
-          {/* <form className="justify-between bg-whiteone text-blackone px-[0.5rem] py-[0.5rem] mb-[1rem] rounded-md flex">
-            <img
-              src={youtube}
-              className="sm:w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
-              alt=""
-            />
-            <input
-              type="text"
-              value={search}
-              placeholder="Get music from Youtube"
-              onChange={(e) => setSearch(e.target.value)}
-              className="text-sm md:text-lg font-black outline-none bg-whiteone text-blackone w-[75%]"
-            ></input>
-            <img
-              src={search_black}
-              className="max-w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
-              alt=""
-            />
-          </form> */}
 
           {/* The Uploading Arena */}
 
@@ -186,27 +167,10 @@ export default function DragDropOne() {
             </button>
           </div>
 
-          {/* <FileUploader
-                        handleChange={handleChange}
-                        name="file"
-                        types={fileTypes}
-                        multiple={true}
-                        hoverTitle="Drop Here"
-                        minSize={2}
-                        // children={dragStyle}
-                    /> */}
-
           <div className="displayaudio grid grid-cols-5">
             {audioList &&
               audioList.map((a) => (
                 <div className="flex flex-col align-middle text-center">
-                  {/* {console.log(a)} */}
-                  {/* <audio
-                  className="my-5"
-                  controls
-                  src={a.url}
-                  type="audio/wav"
-                ></audio> */}
                   <img src={cdadd} alt="" />
                   <div className="text-whiteone text-[0.8rem]">{a.name}</div>
                 </div>
@@ -216,7 +180,6 @@ export default function DragDropOne() {
             onClick={handleDelete}
             alt="Inactive Delete Button"
             src={audioList ? dustbin_inactive : dustbin_active}
-            // src={dustbin_inactive}
             className="cursor-pointer absolute right-1 bottom-1 max-w-[2rem]"
           />
         </div>

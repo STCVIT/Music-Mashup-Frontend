@@ -15,9 +15,14 @@ import lower_semi_fill from "../Images/lower_semi_fill.png";
 import lower_semi_empty from "../Images/lower_semi_empty.png";
 import upper_semi_empty from "../Images/upper_semi_empty.png";
 import { motion } from "framer-motion";
-
+// import { useUserAuth } from "../context/UserAuthContext";
 
 export default function LandingTwo() {
+  // const { user } = useUserAuth();
+  // window.onload = () => {
+  //   console.log("user: ", user);
+  // };
+
   function handleHoverUpper() {
     document.querySelector(".upper-text").classList.remove("text-whiteone");
     document.querySelector(".upper_semi").setAttribute("src", lower_semi_empty);
@@ -120,7 +125,6 @@ export default function LandingTwo() {
         <div className={helpClick ? "block z-30" : "hidden"}>
           <Help />
         </div>
-        
       </div>
     </div>
   );
