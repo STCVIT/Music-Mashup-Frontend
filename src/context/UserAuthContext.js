@@ -166,10 +166,17 @@ export function UserAuthContextProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setTokenFunc(user);
-      console.log("user: ", user);
-      console.log("unsubscribe: ", unsubscribe);
+      if (user) {
+        setUser(user);
+        setTokenFunc(user);
+        console.log("user: ", user);
+        console.log("unsubscribe: ", unsubscribe);
+      } else {
+        // logging in as another anonymous user as soon as you log out.
+        // everything's wiped out though?
+        anonUser();
+      }
+
       // console.log("token is now: ", token);
     });
     return () => {
