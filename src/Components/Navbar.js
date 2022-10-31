@@ -9,7 +9,6 @@ import Logout from "./Logout";
 import LoginButton from "./LoginButton";
 
 const Navbar = () => {
-
   const { user } = useUserAuth();
 
   return (
@@ -25,7 +24,7 @@ const Navbar = () => {
       <div className="md:w-[2.5rem] w-[2rem] order-last flex flex-row mr-24">
         <img
           className="rounded-full"
-          src={user ? user.photoUrl : userImg}
+          src={user.email ? user.photoUrl : userImg}
           alt=""
         />
         <Menu>
@@ -62,31 +61,36 @@ const Navbar = () => {
                   className="absolute right-0 w-56 mt-2 origin-top-right bg-blackone border divide-y divide-gray-100 rounded-md shadow-lg outline-none text-whiteone"
                 >
                   <div className="px-4 py-3">
-                    <p className="text-sm leading-5">Signed in as</p>
+                    <p className="text-sm leading-5">
+                      {user.email && "Signed in as"}
+                    </p>
                     <p className="text-sm font-medium leading-5 text-whitone truncate">
-                      {user ? user.email : "Not signed in"}
+                      {user.email ? user.email : "Not signed in"}
                     </p>
                   </div>
 
-                  {user && <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/MyMusic"
-                          className={`${active
-                            ? "bg-gray-100 text-blackone"
-                            : "text-whitone"
+                  {user && (
+                    <div className="py-1">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            to="/MyMusic"
+                            className={`${
+                              active
+                                ? "bg-gray-100 text-blackone"
+                                : "text-whitone"
                             } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                        >
-                          My music
-                        </Link>
-                      )}
-                    </Menu.Item>
-                  </div>}
+                          >
+                            My music
+                          </Link>
+                        )}
+                      </Menu.Item>
+                    </div>
+                  )}
 
                   <div className="py-1">
-                    {user && <Logout />}
-                    {!user && <LoginButton />}
+                    {user.email && <Logout />}
+                    {!user.email && <LoginButton />}
                   </div>
                 </Menu.Items>
               </Transition>
@@ -94,7 +98,6 @@ const Navbar = () => {
           )}
         </Menu>
       </div>
-
 
       {/* <motion.div
         whileTap={{ scale: 0.9 }}
@@ -111,8 +114,6 @@ const Navbar = () => {
       </motion.div> */}
     </div>
   );
-
-
 };
 
 export default Navbar;

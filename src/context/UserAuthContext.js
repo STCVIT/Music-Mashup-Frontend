@@ -19,6 +19,7 @@ const userAuthContext = createContext();
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState("");
   const [token, setToken] = useState("");
+
   function signUp(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
@@ -30,6 +31,8 @@ export function UserAuthContextProvider({ children }) {
   function logOut() {
     return signOut(auth);
   }
+  // UNLINKING :
+  // firebase.auth().currentUser.unlink(firebase.auth.FacebookAuthProvider.PROVIDER_ID)
 
   function googleSignIn() {
     console.log("pressed");
@@ -57,7 +60,6 @@ export function UserAuthContextProvider({ children }) {
           });
       })
 
-      //mene thoda sa code change kiya line 48,
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -168,7 +170,7 @@ export function UserAuthContextProvider({ children }) {
       setTokenFunc(user);
       console.log("user: ", user);
       console.log("unsubscribe: ", unsubscribe);
-      console.log("token is now: ", token);
+      // console.log("token is now: ", token);
     });
     return () => {
       unsubscribe();

@@ -13,8 +13,16 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import ResetPassword from "./Components/ResetPassword";
 import MyMusic from "./Components/MyMusic";
 import YTfeature from "./Components/YTfeature";
+import { useUserAuth } from "./context/UserAuthContext";
 
 export default function App() {
+  const { setTokenFunc, anonUser } = useUserAuth;
+  window.onload = async () => {
+    const temp = await anonUser();
+    const setid = setTokenFunc(temp.user);
+    console.log("id is now: ", setid);
+  }
+
   const location = useLocation();
   return (
     <div>

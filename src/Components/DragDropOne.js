@@ -14,8 +14,7 @@ import question_fill from "../Images/question_fill.png";
 import cdadd from "../Images/cdadd.png";
 import youtube from "../Images/youtube.png";
 import { useUserAuth } from "../context/UserAuthContext";
-import { storage, fstore } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { storage } from "../firebase";
 import {
   ref,
   uploadBytes,
@@ -23,18 +22,17 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import { v4 } from "uuid";
 import Navbar from "./Navbar";
 import BlackScreenAnimation from "./BlackScreenAnimation";
 import Help from "./Help";
 
 export default function DragDropOne() {
-  const { user, token } = useUserAuth();
-  console.log("token from dragdrop1: ", token);
+  const { token } = useUserAuth();
+  console.log("token in drag drop one: ", token);
 
   const [audioList, setAudioList] = useState([]);
   const [audioUpload, setAudioUpload] = useState(null);
-  const [foldername, setFoldername] = useState("audio_" + token);
+  const foldername = token;
   console.log("foldername is " + foldername);
   const audioListRef = ref(storage, `${foldername}/`);
 
@@ -45,7 +43,6 @@ export default function DragDropOne() {
       return;
     }
     console.log("uploading file...");
-    // const audioname = audioUpload.name + "___" + v4();
     const audioname = audioUpload.name;
     console.log("audio name: ", audioname);
     const audioRef = ref(storage, `${foldername}/${audioname}`);
@@ -56,18 +53,6 @@ export default function DragDropOne() {
         .then((urll) => {
           setAudioList((prev) => [...prev, urll]);
           alert("audio uploaded to storage!");
-
-          // storing url in firestore
-          const set_in_firestore = async () => {
-            const docRef = doc(fstore, foldername, audioname);
-            const p = {
-              url: urll.toString(),
-            };
-            await setDoc(docRef, p);
-            alert("stored in firestore!");
-          };
-
-          set_in_firestore();
         })
         .catch((error) => {
           console.log("error: ", error);
@@ -76,18 +61,11 @@ export default function DragDropOne() {
   };
 
   useEffect(() => {
-    // console.log("use effect run");
     listAll(audioListRef).then((res) => {
       res.items.forEach((item) => {
         const fullname = item.fullPath;
-        // console.log(fullname);
-        // const temp = fullname.split("__")[0];
         const audioname2 = fullname.split("/")[1];
-        // const audioname2 = temp.slice(6, temp.length);
         getDownloadURL(item).then((audiourl) => {
-          // me - note : async await use state - read. promiseall use.
-          // console.log("url:", url);
-          // me - warning : set functions in React do not work asynchronously
           setAudioList((prev) => [
             ...prev,
             {
@@ -101,28 +79,56 @@ export default function DragDropOne() {
     });
   }, []);
 
-  function handleDelete() {
-    console.log("delete button pressed");
-  }
-
   onbeforeunload = (event) => {
     event.preventDefault();
-    // console.log("before refresh: ", event);
-    audioList.map((eachAudio) => {
-      var storageRef = ref(storage, eachAudio.filename);
-      deleteObject(storageRef)
+    handleDelete();
+  };
+
+  function handleDelete() {
+    audioList.map((eachaudio) => {
+      var audioRefDel = ref(storage, `${foldername}/${eachaudio.name}`);
+      deleteObject(audioRefDel)
         .then(() => {
-          console.log("deleted all files");
+          console.log(`deleted ${eachaudio.name}`);
         })
         .catch((error) => {
           console.log("error: ", error);
         });
     });
-  };
+  }
 
   const [helpClick, setHelpClick] = useState(0);
   function handleHelpClick() {
     setHelpClick(!helpClick);
+  }
+
+  function handleMash() {
+    console.log("mash btn clicked");
+    // https://mm-backend.rbsparky.repl.co/
+    if (audioList) {
+      fetch("https://mm-backend.rbsparky.repl.co", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(audioList),
+      })
+        .then(function (response) {
+          console.log(response);
+          if (response.ok) {
+            response.json().then(function (response) {
+              console.log(response);
+            });
+          } else {
+            throw Error("encountered some error.");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      console.log("nothing there to mash!");
+    }
   }
 
   return (
@@ -170,7 +176,10 @@ export default function DragDropOne() {
           <div className="displayaudio grid grid-cols-5">
             {audioList &&
               audioList.map((a) => (
-                <div className="flex flex-col align-middle text-center">
+                <div
+                  id={a.filename}
+                  className="flex flex-col align-middle text-center"
+                >
                   <img src={cdadd} alt="" />
                   <div className="text-whiteone text-[0.8rem]">{a.name}</div>
                 </div>
@@ -179,18 +188,19 @@ export default function DragDropOne() {
           <img
             onClick={handleDelete}
             alt="Inactive Delete Button"
-            src={audioList ? dustbin_inactive : dustbin_active}
+            src={audioList ? dustbin_active : dustbin_inactive}
             className="cursor-pointer absolute right-1 bottom-1 max-w-[2rem]"
           />
         </div>
 
-        <Link to="../MashingOne">
-          <img
-            className="md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
-            src={audioList.length === 0 ? mash_btn_inactive : mash_btn_active}
-            alt=""
-          />
-        </Link>
+        {/* <Link to="../MashingOne"> */}
+        <img
+          className="md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
+          src={audioList ? mash_btn_active : mash_btn_inactive}
+          alt=""
+          onClick={handleMash}
+        />
+        {/* </Link> */}
         <motion.img
           whileHover={{ scale: 1.2 }}
           alt="Question"

@@ -4,25 +4,26 @@ import RippleAnimations from "../Components/RippleAnimation";
 import { motion } from "framer-motion";
 import { useUserAuth } from "../context/UserAuthContext";
 import pageone_circle from "../Images/pageone_circle.png";
-import { useState } from "react";
 
 export default function LandingOne() {
-  const [error, setError] = useState("");
-  const { anonUser, setTokenFunc } = useUserAuth();
-  window.onload = async () => {
-    console.log("window onloaded");
-    try {
-      const temp = await anonUser();
-      console.log("anon user signed in");
-      // console.log("user: ", temp.user.accessToken);
-      console.log("user id: ", temp.user.auth.lastNotifiedUid);
-      // console.log("user: ", temp);
-      const setid = setTokenFunc(temp.user);
-      console.log("id is now: ", setid);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  const {token} = useUserAuth();
+  console.log("token in landing one: ",token);
+  // const [error, setError] = useState("");
+  // const { anonUser, setTokenFunc } = useUserAuth();
+  // window.onload = async () => {
+  //   console.log("window onloaded");
+  //   try {
+  //     const temp = await anonUser();
+  //     console.log("anon user signed in");
+  //     // console.log("user: ", temp.user.accessToken);
+  //     console.log("user id: ", temp.user.auth.lastNotifiedUid);
+  //     // console.log("user: ", temp);
+  //     const setid = setTokenFunc(temp.user);
+  //     console.log("id is now: ", setid);
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
+  // };
 
   return (
     <motion.div className="min-w-screen min-h-screen bg-blackone flex">

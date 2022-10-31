@@ -15,10 +15,11 @@ import lower_semi_fill from "../Images/lower_semi_fill.png";
 import lower_semi_empty from "../Images/lower_semi_empty.png";
 import upper_semi_empty from "../Images/upper_semi_empty.png";
 import { motion } from "framer-motion";
-// import { useUserAuth } from "../context/UserAuthContext";
+import { useUserAuth } from "../context/UserAuthContext";
 
 export default function LandingTwo() {
-  // const { user } = useUserAuth();
+  const {token } = useUserAuth();
+  console.log("token in landing two: ", token);
   // window.onload = () => {
   //   console.log("user: ", user);
   // };
