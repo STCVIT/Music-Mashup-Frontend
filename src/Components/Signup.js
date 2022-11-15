@@ -13,6 +13,7 @@ import login_bg_2 from "../Images/login_bg_2.png";
 import not_seen from "../Images/not_seen.png";
 import question_white from "../Images/question_white.png";
 import question_fill from "../Images/question_fill.png";
+import axios from "axios";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ export default function Signup() {
     if (pass == conf_password) {
       try {
         await signUp(email, conf_password);
+        await creareUser();
         navigate("/Login");
       } catch (err) {
         setError(err.message);
@@ -55,6 +57,27 @@ export default function Signup() {
   function handleHelpClick() {
     setHelpClick(!helpClick);
   }
+
+  var data = JSON.stringify({
+    "email": email,
+  });
+  
+  var config = {
+    method: 'post',
+    url: 'http://localhost:3000/users',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  function creareUser() {axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch(function (error) {
+    console.log(error);
+  })};
 
   return (
     <div>
