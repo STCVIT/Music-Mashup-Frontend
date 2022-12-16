@@ -43,9 +43,9 @@ export default function DragDropOne() {
   const [audioList, setAudioList] = useState([]);
   const [audioUpload, setAudioUpload] = useState(null);
   const foldername = tokenlist[tokenlist.length - 1];
-  console.log("foldername is " + foldername);
+  // console.log("foldername is " + foldername);
   if (user.email && tokenlist.length > 1) {
-    console.log("logged in after anonymous: true");
+    // console.log("logged in after anonymous: true");
     handleTransfer(tokenlist[tokenlist.length - 2], foldername);
   }
 
@@ -96,9 +96,9 @@ export default function DragDropOne() {
         setModalState({ ...modalState, show: false });
       }, 3000);
     } else {
-      console.log(
-        "audio upload stores: " + audioUpload + " | type: " + typeof audioUpload
-      );
+      // console.log(
+      //   "audio upload stores: " + audioUpload + " | type: " + typeof audioUpload
+      // );
       const audioRef = ref(storage, `${foldername}/${audioUpload.name}`);
       uploadBytes(audioRef, audioUpload).then((snapshot) => {
         getDownloadURL(snapshot.ref)
@@ -111,7 +111,12 @@ export default function DragDropOne() {
             });
           })
           .catch((error) => {
-            console.log("error: ", error);
+            setModalState({
+              heading: "ERROR",
+              message: "" + error,
+              show: true,
+            });            
+            // console.log("error: ", error);
           });
       });
     }
@@ -137,7 +142,7 @@ export default function DragDropOne() {
   // };
 
   function handleDelete(userfoldername = foldername) {
-    console.log("foldername: ", userfoldername);
+    // console.log("foldername: ", userfoldername);
     if (audioList.length == 0) {
       setModalState({
         heading: "ERROR",
@@ -145,13 +150,13 @@ export default function DragDropOne() {
         show: true,
       });
       return;
-    } else {
+    } else {  
       audioList.map((eachaudio) => {
         var audioRefDel = ref(storage, `${userfoldername}/${eachaudio.name}`);
-        console.log("audioRefDel: ", audioRefDel);
+        // console.log("audioRefDel: ", audioRefDel);
         deleteObject(audioRefDel)
           .then(() => {
-            console.log(`deleted ${eachaudio.name}`);
+            // console.log(`deleted ${eachaudio.name}`);
           })
           .catch((error) => {
             // console.log("error in deletion: ", error);
@@ -168,7 +173,7 @@ export default function DragDropOne() {
   }
 
   function handleTransfer(userfoldername1, userfoldername2) {
-    console.log("in handle transfer function");
+    // console.log("in handle transfer function");
     const audioListRef1 = ref(storage, `${userfoldername1}/`);
 
     listAll(audioListRef1).then((res) => {
@@ -180,7 +185,12 @@ export default function DragDropOne() {
             console.log("transfered: ", snapshot.metadata);
           })
           .catch((error) => {
-            console.log("error: ", error);
+            setModalState({
+              heading: "ERROR",
+              message: "" + error,
+              show: true,
+            });
+            // console.log("error: ", error);
           });
       });
     });

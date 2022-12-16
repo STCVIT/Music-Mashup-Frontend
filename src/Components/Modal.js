@@ -9,7 +9,7 @@ export default function Modal({ show, heading, message, onClose }) {
       onClick={onClose}
     >
       <div
-        className=" bg-whiteone w-[40%] rounded-md p-4 text-blackone"
+        className=" bg-whiteone lg:w-[40%] w-[60%] rounded-md p-4 text-blackone"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Heading */}
