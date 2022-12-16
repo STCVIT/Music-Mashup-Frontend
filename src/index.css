@@ -24,7 +24,6 @@ input[type="file"]::file-selector-button {
   background-color: #2A2A2A;
   transition: 0.8s;
 }
-/* <div className="relative m-[5%] py-[5rem] border-2 rounded-lg border-dashed cursor-pointer"> */
 
 input[type="file"]::file-selector-button:hover {
   background-color: #F2F2F2;

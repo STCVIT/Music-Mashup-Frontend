@@ -21,7 +21,7 @@ export default function App() {
     const temp = await anonUser();
     const setid = setTokenFunc(temp.user);
     console.log("id is now: ", setid);
-  }
+  };
 
   const location = useLocation();
   return (

@@ -21,7 +21,7 @@ export default function Login() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("useuserauth",useUserAuth);
+    console.log("useuserauth", useUserAuth);
     try {
       await signIn(email, password);
       navigate("/DragDropOne");
@@ -62,19 +62,23 @@ export default function Login() {
       <div className="h-screen w-screen absolute text-whiteone overflow-hidden flex flex-col justify-center items-center">
         <Navbar />
         <div className="flex flex-col justify-center text-center items-center w-[80%]">
-          <div className="text-2xl md:text-[2.5rem] mb-8">Welcome Back</div>
+          <div className="text-3xl mb-8">Welcome Back</div>
           <form
             onSubmit={handleSubmit}
             className="lg:w-[45%] md:w-[70%] sm:w-[80%] w-[95%]"
           >
             <button
               onClick={handleGoogleSignIn}
-              className="bg-whiteone text-blackone font-black text-sm md:text-lg py-2 rounded-md w-full"
+              className="bg-whiteone text-blackone font-black text-sm md:text-md py-2 rounded-md w-full"
             >
-              <img className="w-[1rem] inline-flex mr-2 mb-1" src={google} alt="" />
+              <img
+                className="w-[1rem] inline-flex mr-2 mb-1"
+                src={google}
+                alt=""
+              />
               SIGN IN WITH GOOGLE
             </button>
-            <span className="md:text-lg my-4 block">or</span>
+            <span className="md:text-md my-4 block">or</span>
             <div className="text-left">
               <input
                 type="text"
@@ -82,12 +86,12 @@ export default function Login() {
                 name="email"
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
-                className="form_field bg-blackone text-whiteone md:py-2 border-whiteone border rounded-md outline-none  md:text-xl px-2 py-2 w-full"
+                className="form_field bg-blackone text-whiteone md:py-2 border-whiteone border rounded-md outline-none  md:text-md px-2 py-2 w-full"
                 required
               />
               <label
                 forHTML="email"
-                className="text-sm md:text-lg bg-blackone relative bottom-[3.45rem] left-5 md:bottom-[3.8rem]"
+                className="text-sm md:text-md bg-blackone relative bottom-[3.5rem] left-5"
               >
                 Enter your Email
               </label>
@@ -100,35 +104,36 @@ export default function Login() {
                 name="password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="form_field bg-blackone text-whiteone border-whiteone border rounded-md outline-none  px-2 py-2 w-full md:text-xl"
+                className="form_field bg-blackone text-whiteone border-whiteone border rounded-md outline-none  px-2 py-2 w-full md:text-md"
               />
 
               <label
                 forHTML="password"
-                className="text-sm md:text-lg bg-blackone relative bottom-[3.45rem] md:bottom-[3.8rem] left-5"
+                className="text-sm md:text-md bg-blackone relative bottom-[3.5rem] left-5"
               >
                 Enter your Password
               </label>
               <img
                 alt="Show Password"
-                className="password_eye w-[1.5rem] relative left-[90%] md:left-[93%] bottom-[3.25rem] md:bottom-[3.9rem]"
+                //  bottom-[3.25rem] md:bottom-[3.9rem]
+                className="z-10 password_eye w-[1.3rem] cursor-pointer relative left-[90%] md:left-[93%] bottom-[3.5rem]"
                 src={not_seen}
                 onClick={handlePasswordEye}
               />
-              <span className="relative bottom-[2.5rem] block text-right text-sm md:text-lg">
+              <span className="relative bottom-[2.5rem] block text-right text-sm md:text-md">
                 <Link to="../ResetPassword">Reset Password</Link>
               </span>
             </div>
             <button
               type="submit"
-              className="bg-whiteone text-blackone font-black md:text-lg text-sm py-2 rounded-md w-full"
+              className="bg-whiteone text-blackone font-black md:text-md text-sm py-2 rounded-md w-full"
             >
               SIGN IN
             </button>
           </form>
-          <div className="md:text-xl my-2">
+          <div className="md:text-md my-2">
             Haven't signed up yet?
-            <Link to="../Signup" className="font-bold block md:text-xl my-2">
+            <Link to="../Signup" className="font-bold block md:text-md my-2">
               Create an account
             </Link>
           </div>

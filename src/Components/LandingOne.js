@@ -6,8 +6,11 @@ import { useUserAuth } from "../context/UserAuthContext";
 import pageone_circle from "../Images/pageone_circle.png";
 
 export default function LandingOne() {
-  const {token} = useUserAuth();
-  console.log("token in landing one: ",token);
+  const { tokenlist } = useUserAuth();
+  console.log("token list: ", tokenlist);
+  const token = tokenlist[tokenlist.length - 1];
+  console.log("token in landing one: ", token);
+
   // const [error, setError] = useState("");
   // const { anonUser, setTokenFunc } = useUserAuth();
   // window.onload = async () => {
@@ -40,7 +43,9 @@ export default function LandingOne() {
           }}
         />
       </Link>
-
+      <div className="text-whiteone opacity-30 absolute z-10 left-[50%] translate-x-[-50%] top-[30%]">
+        CLICK TO BEGIN!
+      </div>
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
         <RippleAnimations />
       </div>

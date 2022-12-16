@@ -18,8 +18,8 @@ import { motion } from "framer-motion";
 import { useUserAuth } from "../context/UserAuthContext";
 
 export default function LandingTwo() {
-  const {token } = useUserAuth();
-  console.log("token in landing two: ", token);
+  // const {tokenlist } = useUserAuth();
+  // console.log("token in landing two: ", token);
   // window.onload = () => {
   //   console.log("user: ", user);
   // };

@@ -129,11 +129,11 @@ export default function YTfeature() {
           src={dragdrop}
           className="absolute top-0 left-[-25vh]"
         />
-        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 rounded-lg h-[60vh] lg:w-[50vw] md:w-[70vw] w-[90vw] text-whiteone p-5 overflow-y-scroll">
+        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 rounded-lg lg:w-[50vw] md:w-[70vw] w-[90vw] text-whiteone p-5 h-[60vh] scrollbar scrollbar-thumb-[#F2F2F2] scrollbar-track-[#2A2A2A] scrollbar-thin overflow-y-scroll">
           <form className="justify-between bg-whiteone text-blackone px-[0.5rem] py-[0.5rem] mb-[1rem] rounded-md flex">
             <img
               src={youtube}
-              className="sm:w-[1.5rem] max-h-[1.2rem] my-auto mx-2"
+              className="sm:w-[1.5rem] max-h-[1.2rem] my-auto ml-2 -mr-8"
             />
             {/* onChange={(e) => setSearch(e.target.value)} */}
             <input
@@ -141,7 +141,7 @@ export default function YTfeature() {
               value={search}
               placeholder="Get music from Youtube"
               onChange={(e) => setSearch(e.target.value)}
-              className="text-sm md:text-lg font-black outline-none bg-whiteone text-blackone w-[75%]"
+              className="text-sm md:text-lg outline-none bg-whiteone text-blackone w-[75%]"
             ></input>
             <img
               src={search_black}

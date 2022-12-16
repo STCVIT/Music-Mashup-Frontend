@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between absolute z-10 top-0 w-full bg-blackone md:py-4 p-2 drop-shadow-2xl">
-      <Link to="../LandingTwo" className="md:w-[2rem] w-[1.5rem] ml-2">
+      <Link to="../LandingTwo" className="w-[2rem] my-auto ml-2">
         <motion.img
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
@@ -21,9 +21,10 @@ const Navbar = () => {
           className="my-auto mx-5"
         />
       </Link>
-      <div className="md:w-[2.5rem] w-[2rem] order-last flex flex-row mr-24">
+
+      <div className="order-last flex gap-2 flex-row mr-8">
         <img
-          className="rounded-full"
+          className="rounded-full w-[2.5rem]"
           src={user.email ? user.photoUrl : userImg}
           alt=""
         />
@@ -98,20 +99,6 @@ const Navbar = () => {
           )}
         </Menu>
       </div>
-
-      {/* <motion.div
-        whileTap={{ scale: 0.9 }}
-        className="absolute flex align-middle gap-2 right-[3rem] top-[1rem] max-w-[3rem] z-[20] mr-10"
-      >
-        <span className="text-whiteone my-auto">
-          {user ? user.displayName : "LogIn"}
-        </span>
-        <img
-          className="rounded-full"
-          src={user ? user.photoUrl : userImg}
-          alt=""
-        />
-      </motion.div> */}
     </div>
   );
 };

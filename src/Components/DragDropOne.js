@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { FileUploader } from "react-drag-drop-files";
+// import { FileUploader } from "react-drag-drop-files";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import dragdrop from "../Images/dragdrop-bg.png";
-import cloud from "../Images/cloud.png";
+// import cloud from "../Images/cloud.png";
+// import mashing_cd from "../Images/mashing_cd.png";
 import dustbin_inactive from "../Images/dustbin_inactive.png";
 import dustbin_active from "../Images/dustbin_active.png";
 import mash_btn_inactive from "../Images/mash_btn_inactive.png";
@@ -15,6 +16,7 @@ import cdadd from "../Images/cdadd.png";
 import youtube from "../Images/youtube.png";
 import { useUserAuth } from "../context/UserAuthContext";
 import { storage } from "../firebase";
+
 import {
   ref,
   uploadBytes,
@@ -22,45 +24,36 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
+
 import Navbar from "./Navbar";
 import BlackScreenAnimation from "./BlackScreenAnimation";
 import Help from "./Help";
+import Modal from "./Modal";
 
 export default function DragDropOne() {
-  const { token } = useUserAuth();
-  console.log("token in drag drop one: ", token);
+  const { tokenlist, user } = useUserAuth();
+  // console.log("token list: ", tokenlist);
+
+  const [modalState, setModalState] = useState({
+    heading: "",
+    message: "",
+    show: false,
+  });
 
   const [audioList, setAudioList] = useState([]);
   const [audioUpload, setAudioUpload] = useState(null);
-  const foldername = token;
+  const foldername = tokenlist[tokenlist.length - 1];
   console.log("foldername is " + foldername);
-  const audioListRef = ref(storage, `${foldername}/`);
+  if (user.email && tokenlist.length > 1) {
+    console.log("logged in after anonymous: true");
+    handleTransfer(tokenlist[tokenlist.length - 2], foldername);
+  }
 
-  const uploadAudio = () => {
-    if (audioUpload == null) return;
-    if (audioList.length > 2) {
-      alert("maximum 3 songs only!");
-      return;
-    }
-    console.log("uploading file...");
-    const audioname = audioUpload.name;
-    console.log("audio name: ", audioname);
-    const audioRef = ref(storage, `${foldername}/${audioname}`);
-    localStorage.setItem("audio-ref", JSON.stringify(audioRef));
-    uploadBytes(audioRef, audioUpload).then((snapshot) => {
-      console.log("uploaded: ", snapshot.metadata);
-      getDownloadURL(snapshot.ref)
-        .then((urll) => {
-          setAudioList((prev) => [...prev, urll]);
-          alert("audio uploaded to storage!");
-        })
-        .catch((error) => {
-          console.log("error: ", error);
-        });
-    });
-  };
+  // ------------- FETCHING DATA FROM THE FOLDER -------------
 
   useEffect(() => {
+    setAudioList([]);
+    const audioListRef = ref(storage, `${foldername}/`);
     listAll(audioListRef).then((res) => {
       res.items.forEach((item) => {
         const fullname = item.fullPath;
@@ -79,31 +72,138 @@ export default function DragDropOne() {
     });
   }, []);
 
-  onbeforeunload = (event) => {
-    event.preventDefault();
-    handleDelete();
+  const uploadAudio = () => {
+    if (!audioUpload == 0) {
+      setModalState({
+        heading: "ERROR",
+        message: "Can't upload NULL!",
+        show: true,
+      });
+    }
+
+    setModalState({
+      show: true,
+      heading: "Please wait!",
+      message: "Your music's gettin' uploaded...",
+    });
+    if (audioUpload == null) {
+      setModalState({
+        heading: "ALERT",
+        message: "No songs uploaded!",
+        show: true,
+      });
+      setTimeout(() => {
+        setModalState({ ...modalState, show: false });
+      }, 3000);
+    } else {
+      console.log(
+        "audio upload stores: " + audioUpload + " | type: " + typeof audioUpload
+      );
+      const audioRef = ref(storage, `${foldername}/${audioUpload.name}`);
+      uploadBytes(audioRef, audioUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((urll) => {
+            setAudioList((prev) => [...prev, urll]);
+            setModalState({
+              heading: "GREAT!",
+              message: "Music uploaded to storage",
+              show: true,
+            });
+          })
+          .catch((error) => {
+            console.log("error: ", error);
+          });
+      });
+    }
+
+    // if (audioList.length > 2) {
+    //   showboard.innerText = "UPLOADING";
+    //   return;
+    // }
   };
 
-  function handleDelete() {
-    audioList.map((eachaudio) => {
-      var audioRefDel = ref(storage, `${foldername}/${eachaudio.name}`);
-      deleteObject(audioRefDel)
-        .then(() => {
-          console.log(`deleted ${eachaudio.name}`);
-        })
-        .catch((error) => {
-          console.log("error: ", error);
-        });
+  // ------------- Delete Audios -------------
+
+  // onbeforeunload = (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     tokenlist.forEach((usertoken)=>{
+  //       handleDelete(usertoken);
+  //     })
+  //   } catch {
+  //     console.log("faced errors in deleting");
+  //   }
+
+  // };
+
+  function handleDelete(userfoldername = foldername) {
+    console.log("foldername: ", userfoldername);
+    if (audioList.length == 0) {
+      setModalState({
+        heading: "ERROR",
+        message: "Can't delete NULL!",
+        show: true,
+      });
+      return;
+    } else {
+      audioList.map((eachaudio) => {
+        var audioRefDel = ref(storage, `${userfoldername}/${eachaudio.name}`);
+        console.log("audioRefDel: ", audioRefDel);
+        deleteObject(audioRefDel)
+          .then(() => {
+            console.log(`deleted ${eachaudio.name}`);
+          })
+          .catch((error) => {
+            // console.log("error in deletion: ", error);
+            setModalState({
+              heading: "ERROR",
+              message: "" + error,
+              show: true,
+            });
+          });
+      });
+    }
+
+    window.location.reload();
+  }
+
+  function handleTransfer(userfoldername1, userfoldername2) {
+    console.log("in handle transfer function");
+    const audioListRef1 = ref(storage, `${userfoldername1}/`);
+
+    listAll(audioListRef1).then((res) => {
+      res.items.forEach((item) => {
+        // console.log("item: "+item+" type: "+typeof(item));
+        const audioListRef22 = ref(storage, `${userfoldername2}/${item.name}`);
+        uploadBytes(audioListRef22, item)
+          .then((snapshot) => {
+            console.log("transfered: ", snapshot.metadata);
+          })
+          .catch((error) => {
+            console.log("error: ", error);
+          });
+      });
     });
+
+    handleDelete(userfoldername1);
   }
 
   const [helpClick, setHelpClick] = useState(0);
+
   function handleHelpClick() {
     setHelpClick(!helpClick);
   }
 
   function handleMash() {
-    console.log("mash btn clicked");
+    // console.log("mash btn clicked");
+    if (audioList.length == 0) {
+      setModalState({
+        heading: "ERROR",
+        message: "Can't mash NULL!",
+        show: true,
+      });
+      return;
+    }
     // https://mm-backend.rbsparky.repl.co/
     if (audioList) {
       fetch("https://mm-backend.rbsparky.repl.co", {
@@ -117,17 +217,19 @@ export default function DragDropOne() {
           console.log(response);
           if (response.ok) {
             response.json().then(function (response) {
-              console.log(response);
+              console.log("recieved: " + response);
             });
           } else {
             throw Error("encountered some error.");
           }
         })
         .catch(function (error) {
-          console.log(error);
+          setModalState({
+            heading: "ERROR",
+            message: error,
+            show: true,
+          });
         });
-    } else {
-      console.log("nothing there to mash!");
     }
   }
 
@@ -135,6 +237,12 @@ export default function DragDropOne() {
     <div>
       <BlackScreenAnimation />
       <Navbar />
+      <Modal
+        show={modalState.show}
+        heading={modalState.heading}
+        message={modalState.message}
+        onClose={() => setModalState({ ...modalState, show: false })}
+      />
       <div className="h-screen w-screen text-whiteone overflow-hidden flex flex-col justify-center items-center">
         <img
           alt="BG Design"
@@ -172,6 +280,13 @@ export default function DragDropOne() {
               Upload Audio
             </button>
           </div>
+          {/* <div
+            className={
+              (!loader ? "hidden " : "") +
+              "w-full h-[10vh] bg-whiteone rounded-md flex items-center justify-center text-blackone font-bold"
+            }
+            id="showboard"
+          ></div> */}
 
           <div className="displayaudio grid grid-cols-5">
             {audioList &&
@@ -186,20 +301,21 @@ export default function DragDropOne() {
               ))}
           </div>
           <img
-            onClick={handleDelete}
-            alt="Inactive Delete Button"
-            src={audioList ? dustbin_active : dustbin_inactive}
-            className="cursor-pointer absolute right-1 bottom-1 max-w-[2rem]"
+            onClick={() => handleDelete(foldername)}
+            alt="Delete Button"
+            src={audioList.length == 0 ? dustbin_inactive : dustbin_active}
+            className="cursor-pointer absolute right-2 bottom-2 max-w-[2rem] hover:scale-[120%] duration-300"
           />
         </div>
 
         {/* <Link to="../MashingOne"> */}
         <img
-          className="md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
-          src={audioList ? mash_btn_active : mash_btn_inactive}
+          className="md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%] hover:scale-[120%] duration-300 cursor-pointer"
+          src={audioList.length == 0 ? mash_btn_inactive : mash_btn_active}
           alt=""
           onClick={handleMash}
         />
+
         {/* </Link> */}
         <motion.img
           whileHover={{ scale: 1.2 }}
