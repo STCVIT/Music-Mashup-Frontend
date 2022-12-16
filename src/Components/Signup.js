@@ -6,7 +6,7 @@ import Help from "./Help";
 
 import BlackScreenAnimation from "./BlackScreenAnimation";
 import Navbar from "./Navbar";
-
+import Modal from "./Modal";
 import google from "../Images/google.png";
 import login_bg_1 from "../Images/login_bg_1.png";
 import login_bg_2 from "../Images/login_bg_2.png";
@@ -16,6 +16,11 @@ import question_fill from "../Images/question_fill.png";
 import axios from "axios";
 
 export default function Signup() {
+  const [modalState, setModalState] = useState({
+    heading: "",
+    message: "",
+    show: false,
+  });
   const [email, setEmail] = useState("");
   const [pass, setPassword] = useState("");
   const [conf_password, setConf_Password] = useState("");
@@ -28,28 +33,31 @@ export default function Signup() {
       try {
         await signUp(email, conf_password);
         await creareUser();
-        navigate("/Login");
+        navigate("/DragDropOne");
       } catch (err) {
         setError(err.message);
-        console.log("ERROR: ", error);
+        setModalState({
+          heading: "ERROR",
+          message: error,
+          show: true,
+        });
       }
     } else {
-      setError("PASSWORDS DON'T MATCH");
-      console.log("ERROR: ", error);
+      setError("Passwords don't match!");
+      setModalState({
+        heading: "ERROR",
+        message: error,
+        show: true,
+      });
     }
   };
 
-  function handlePasswordEye() {
-    // console.log("in handle password eye function");
+  function handlePasswordEye(e) {
     const passInput = document.getElementById("password");
-    const passInput_re = document.getElementById("re_password");
-
     if (passInput.getAttribute("type") === "text") {
       passInput.setAttribute("type", "password");
-      passInput_re.setAttribute("type", "password");
     } else {
       passInput.setAttribute("type", "text");
-      passInput_re.setAttribute("type", "text");
     }
   }
 
@@ -86,20 +94,26 @@ export default function Signup() {
       <BlackScreenAnimation />
       <div className="h-screen w-screen absolute text-whiteone overflow-hidden flex flex-col justify-center items-center">
         <Navbar />
+        <Modal
+          show={modalState.show}
+          heading={modalState.heading}
+          message={modalState.message}
+          onClose={() => setModalState({ ...modalState, show: false })}
+        />
         <div className="flex flex-col justify-center text-center items-center w-[80%]">
-          <div className="text-2xl md:text-[2.5rem] mb-8">Welcome</div>
+          <div className="text-2xl md:text-3xl mb-8">Welcome</div>
           <form
             onSubmit={handleSubmit}
             className="lg:w-[45%] md:w-[70%] sm:w-[80%] w-[95%]"
           >
             <button
               // onClick={handleGoogleSignIn}
-              className="bg-whiteone text-blackone font-black text-sm md:text-lg py-2 rounded-md w-full"
+              className="bg-whiteone text-blackone font-black text-sm md:text-md py-2 rounded-md w-full"
             >
               <img className="w-[1rem] inline-flex mr-2 mb-1" src={google} />
               SIGN UP WITH GOOGLE
             </button>
-            <span className="md:text-lg my-4 block">or</span>
+            <span className="md:text-md my-4 block">or</span>
             <div className="text-left">
               <input
                 type="text"
@@ -107,12 +121,12 @@ export default function Signup() {
                 name="email"
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
-                className="form_field bg-blackone text-whiteone md:py-2 border-whiteone border rounded-md outline-none  md:text-xl px-2 py-2 w-full"
+                className="form_field bg-blackone text-whiteone md:py-2 border-whiteone border rounded-md outline-none  md:text-md px-2 py-2 w-full"
                 required
               />
               <label
                 forHTML="email"
-                className="text-sm md:text-md px-1 bg-blackone relative bottom-[3.45rem] left-5 md:bottom-[3.8rem]"
+                className="text-sm md:text-md px-1 bg-blackone relative bottom-[3.5rem] left-5"
               >
                 Enter your Email
               </label>
@@ -123,20 +137,21 @@ export default function Signup() {
                 name="password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="form_field bg-blackone text-whiteone border-whiteone border rounded-md outline-none  px-2 py-2 w-full md:text-xl"
+                className="form_field bg-blackone text-whiteone border-whiteone border rounded-md outline-none  px-2 py-2 w-full md:text-md"
               />
 
               <label
                 forHTML="password"
-                className="text-sm md:text-md px-1 bg-blackone relative bottom-[3.45rem]  md:bottom-[3.8rem] left-5"
+                className="text-sm md:text-md px-1 bg-blackone relative bottom-[3.5rem] left-5"
               >
                 Enter your Password
               </label>
               <img
                 alt="Show Password"
-                className="password_eye w-[1.5rem] relative left-[90%] md:left-[93%] bottom-[3.5rem] md:bottom-[3.7rem] cursor-pointer"
+                // bottom-[3.5rem] md:bottom-[3.7rem]
+                className="z-10 password_eye w-[1.3rem] relative left-[90%] md:left-[93%] cursor-pointer bottom-[3.5rem]"
                 src={not_seen}
-                onClick={handlePasswordEye}
+                onClick={(e) => handlePasswordEye(e)}
               />
               <input
                 value={conf_password}
@@ -145,32 +160,32 @@ export default function Signup() {
                 name="re_password"
                 onChange={(e) => setConf_Password(e.target.value)}
                 required
-                className="form_field bg-blackone text-whiteone border-whiteone border rounded-md outline-none  px-2 py-2 w-full md:text-xl"
+                className="form_field bg-blackone text-whiteone border-whiteone border rounded-md outline-none  px-2 py-2 w-full md:text-md"
               />
 
               <label
                 forHTML="re_password"
-                className="text-sm md:text-md px-1 bg-blackone relative bottom-[3.45rem]  md:bottom-[3.8rem] left-5"
+                className="text-sm md:text-md px-1 bg-blackone relative bottom-[3.5rem] left-5"
               >
                 Confirm your Password
               </label>
-              <img
+              {/* <img
                 alt="Show Password"
-                className="cursor-pointer password_eye w-[1.5rem] relative left-[90%] md:left-[93%] bottom-[3.5rem] md:bottom-[3.7rem]"
+                className="z-10 cursor-pointer password_eye w-[1.3rem] relative left-[90%] md:left-[93%] bottom-[3.5rem]"
                 src={not_seen}
-                onClick={handlePasswordEye}
-              />
+                onClick={(e) => handlePasswordEye(e)}
+              /> */}
             </div>
             <button
               type="submit"
-              className="bg-whiteone text-blackone font-black md:text-lg text-sm py-2 rounded-md w-full"
+              className="bg-whiteone text-blackone font-black md:text-md text-sm py-2 rounded-md w-full"
             >
               SIGN UP
             </button>
           </form>
-          <div className="md:text-xl my-2">
+          <div className="md:text-md my-2">
             Already have an account?
-            <Link to="../Login" className="font-bold block md:text-xl my-2">
+            <Link to="../Login" className="font-bold block md:text-md my-2">
               Login instead
             </Link>
           </div>
