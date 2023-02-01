@@ -14,6 +14,7 @@ import ResetPassword from "./Components/ResetPassword";
 import MyMusic from "./Components/MyMusic";
 import YTfeature from "./Components/YTfeature";
 import { useUserAuth } from "./context/UserAuthContext";
+import { useState } from "react";
 
 export default function App() {
   const { setTokenFunc, anonUser } = useUserAuth;
@@ -24,6 +25,7 @@ export default function App() {
   };
 
   const location = useLocation();
+  const [songUrl, setSongUrl] = useState("");
   return (
     <div>
       <UserAuthContextProvider>
@@ -32,13 +34,21 @@ export default function App() {
             <Route path="/" exact element={<LandingOne />} />
             <Route path="/LandingTwo" exact element={<LandingTwo />} />
             <Route path="/TempFile" exact element={<TempFile />} />
-            <Route path="/DragDropOne" exact element={<DragDropOne />} />
+            <Route
+              path="/DragDropOne"
+              exact
+              element={<DragDropOne setSongUrl={setSongUrl} />}
+            />
             <Route
               path="/MusicPlayingOne"
               exact
-              element={<MusicPlayingOne />}
+              element={<MusicPlayingOne setSongUrl={setSongUrl} songUrl={songUrl}/>}
             />
-            <Route path="/MashingOne" exact element={<MashingOne />} />
+            <Route
+              path="/MashingOne"
+              exact
+              element={<MashingOne songUrl={songUrl} />}
+            />
             <Route path="/Login" exact element={<Login />} />
             <Route path="/Signup" exact element={<Signup />} />
             <Route path="/ResetPassword" exact element={<ResetPassword />} />

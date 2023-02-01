@@ -4,17 +4,75 @@ import playing_cd from "../Images/playing_cd.png";
 import playing_discard_btn from "../Images/playing_discard_btn.png";
 import playing_download_btn from "../Images/playing_download_btn.png";
 import playing_btn from "../Images/playing_btn.png";
-
 import { motion } from "framer-motion";
 import BlackScreenAnimation from "./BlackScreenAnimation";
+import Modal from "./Modal";
+import axios from "axios";
+import { useUserAuth } from "../context/UserAuthContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-export default function MusicPlayingOne() {
+export default function MusicPlayingOne({ setSongUrl, songUrl }) {
+  console.log("url recieved: ", songUrl);
+  const navigate = useNavigate();
+  const { user } = useUserAuth();
+
+  const [modalState, setModalState] = useState({
+    heading: "",
+    message: "",
+    show: false,
+  });
+
+  function saveSong() {
+    console.log("song saved in profile.");
+    // will be completed after backend is hosted.
+
+    // var config = {
+    //   method: "post",
+    //   url: `http://localhost:3000/remixedsongs/${user.email}`,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   data: songUrl,
+    // };
+
+    // axios(config)
+    //   .then(function (response) {
+    //     console.log(JSON.stringify(response.data));
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+  }
+
+  function downloadSong() {
+    console.log("downloaded song.");
+  }
+
+  function discardSong() {
+    setSongUrl("");
+    console.log("discarded song.");
+    setModalState({
+      heading: "DISCARDED",
+      message: "The song has been discarded.",
+      show: true,
+    });
+    setTimeout(() => {
+      setModalState({ ...modalState, show: false });
+    }, 3000);
+    navigate("/LandingTwo");
+  }
+
   return (
     <div>
       <BlackScreenAnimation />
-      {/* <span className="block z-300"> */}
       <Navbar />
-      {/* </span> */}
+      <Modal
+        show={modalState.show}
+        heading={modalState.heading}
+        message={modalState.message}
+        onClose={() => setModalState({ ...modalState, show: false })}
+      />
       <div className="h-screen w-screen bg-blackone text-whiteone overflow-hidden flex flex-col justify-center items-center">
         <img
           src={playing_bg_circle}
@@ -26,18 +84,31 @@ export default function MusicPlayingOne() {
           className="sm:scale-[40%] scale-[45%]"
           alt="Playing CD"
         />
-        <div className="absolute flex flex-col items-center h-[75%] justify-around sm:flex-row sm:justify-around w-full">
+        <div className="absolute flex flex-col items-center h-[75%] justify-around sm:flex-row sm:justify-around w-full z-30">
           <motion.img
             whileHover={{ scale: 1.2 }}
             src={playing_discard_btn}
             className=" cursor-pointer w-[6rem] md:w-[7rem]"
             alt="Discard Button"
+            onClick={discardSong}
           />
+          <a target="_blank" href={songUrl}>
+            <motion.img
+              whileHover={{ scale: 1.2 }}
+              src={playing_download_btn}
+              className="cursor-pointer w-[6rem] md:w-[7rem]"
+              alt="Download Button"
+              onClick={downloadSong}
+            />
+          </a>
+        </div>
+        <div className="absolute flex items-center h-[75%] sm:flex-row sm:justify-around w-full top-[40%]">
           <motion.img
             whileHover={{ scale: 1.2 }}
-            src={playing_download_btn}
+            src={playing_discard_btn}
             className="cursor-pointer w-[6rem] md:w-[7rem]"
-            alt="Download Button"
+            alt="SAVE Button"
+            onClick={saveSong}
           />
         </div>
 
@@ -48,6 +119,9 @@ export default function MusicPlayingOne() {
           alt="Play Button"
         />
       </div>
+      <audio controls display>
+        <source src={songUrl} type="audio/ogg"></source>
+      </audio>
     </div>
   );
 }

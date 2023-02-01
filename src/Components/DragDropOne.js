@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import dragdrop from "../Images/dragdrop-bg.png";
-// import cloud from "../Images/cloud.png";
-// import mashing_cd from "../Images/mashing_cd.png";
 import dustbin_inactive from "../Images/dustbin_inactive.png";
 import dustbin_active from "../Images/dustbin_active.png";
 import mash_btn_inactive from "../Images/mash_btn_inactive.png";
@@ -16,7 +14,7 @@ import cdadd from "../Images/cdadd.png";
 import youtube from "../Images/youtube.png";
 import { useUserAuth } from "../context/UserAuthContext";
 import { storage } from "../firebase";
-
+import { useNavigate } from "react-router-dom";
 import {
   ref,
   uploadBytes,
@@ -30,10 +28,9 @@ import BlackScreenAnimation from "./BlackScreenAnimation";
 import Help from "./Help";
 import Modal from "./Modal";
 
-export default function DragDropOne() {
+export default function DragDropOne({ setSongUrl }) {
+  const navigate = useNavigate();
   const { tokenlist, user } = useUserAuth();
-  // console.log("token list: ", tokenlist);
-
   const [modalState, setModalState] = useState({
     heading: "",
     message: "",
@@ -43,9 +40,7 @@ export default function DragDropOne() {
   const [audioList, setAudioList] = useState([]);
   const [audioUpload, setAudioUpload] = useState(null);
   const foldername = tokenlist[tokenlist.length - 1];
-  // console.log("foldername is " + foldername);
   if (user.email && tokenlist.length > 1) {
-    // console.log("logged in after anonymous: true");
     handleTransfer(tokenlist[tokenlist.length - 2], foldername);
   }
 
@@ -115,7 +110,7 @@ export default function DragDropOne() {
               heading: "ERROR",
               message: "" + error,
               show: true,
-            });            
+            });
             // console.log("error: ", error);
           });
       });
@@ -150,7 +145,7 @@ export default function DragDropOne() {
         show: true,
       });
       return;
-    } else {  
+    } else {
       audioList.map((eachaudio) => {
         var audioRefDel = ref(storage, `${userfoldername}/${eachaudio.name}`);
         // console.log("audioRefDel: ", audioRefDel);
@@ -205,7 +200,17 @@ export default function DragDropOne() {
   }
 
   function handleMash() {
-    // console.log("mash btn clicked");
+    console.log("mash btn clicked");
+
+    // const recieved_url =
+    //   "https://archive.org/download/Creative_Commons_Song_MP3/creativecommonssong.mp3";
+    // setSongUrl(recieved_url);
+    // navigate("/MashingOne");
+
+    // server link: http://ec2-54-238-72-104.ap-northeast-1.compute.amazonaws.com:8000/
+
+
+    // -----------------------------------
     if (audioList.length == 0) {
       setModalState({
         heading: "ERROR",
@@ -216,7 +221,7 @@ export default function DragDropOne() {
     }
     // https://mm-backend.rbsparky.repl.co/
     if (audioList) {
-      fetch("https://mm-backend.rbsparky.repl.co", {
+      fetch("http://ec2-54-238-72-104.ap-northeast-1.compute.amazonaws.com:8000/", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -241,6 +246,7 @@ export default function DragDropOne() {
           });
         });
     }
+    // -----------------------------------
   }
 
   return (

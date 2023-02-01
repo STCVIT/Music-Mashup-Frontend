@@ -46,10 +46,15 @@ export default function YTfeature() {
     },
   };
 
+  // https://youtube-mp3-converter.p.rapidapi.com/service/run?lang=en&id=aJOTlE1K90k&action=button&widget=rapidapi&format=mp3
+
   const [all_details, setAllDetails] = useState([]);
 
+  // url -> mp3 download
+  // `https://convert2mp3s.com/api/single/mp3?url=https://www.youtube.com/watch?v=${videoId}`
+  // gCYcHz2k5x0
+
   function handleSearch(query) {
-    console.log("search button was clicked, query: ", query);
     if (query) {
       setSearch(query);
       fetch(url)
@@ -62,30 +67,24 @@ export default function YTfeature() {
         })
         .then((data) => {
           data.items.map((each) => {
-            const theid = each.id.videoId;
-            fetch(
-              `https://youtube-mp3-download1.p.rapidapi.com/dl?id=${theid}`,
-              options
-            )
-              .then((response) => response.json())
-              //   .then((response) => {
-              //     all_details.push({
-              //       title: response.title,
-              //       link: response.link,
-              //     });
-              //   })
+            console.log("each: ", each);
+            const each_url = `https://www.youtube.com/watch?v=${each.id.videoId}`;
 
-              .then((response) => {
-                console.log("title: " + response.title);
-                setAllDetails((prev) => [
-                  ...prev,
-                  {
-                    title: response.title,
-                    link: response.link,
-                  },
-                ]);
-              })
-              .catch((err) => console.error("error in each id: ", err));
+            // fetch(
+            //   `https://youtube-mp3-download1.p.rapidapi.com/dl?id=${theid}`,
+            //   options
+            // )
+            // .then((response) => response.json())
+            // .then((response) => {
+            //   setAllDetails((prev) => [
+            //     ...prev,
+            //     {
+            //       title: response.title,
+            //       link: response.link,
+            //     },
+            //   ]);
+            // })
+            // .catch((err) => console.error("error in each id: ", err));
           });
         })
         .catch((err) => {
@@ -95,29 +94,6 @@ export default function YTfeature() {
       console.log("search is empty");
     }
   }
-
-  // function handleUpload_YT() {
-  //   // const audioRef_YT = JSON.parse(localStorage.getItem("audio-ref"));
-
-  //   audioList_YT
-  //     ? audioList_YT.map((eachAudio) => {
-  //         var audioRef_YT = ref(
-  //           storage,
-  //           `audio/${eachAudio.aname + "__" + v4()}`
-  //         );
-  //         uploadBytes(audioRef_YT, eachAudio.link)
-  //           .then((snapshot) => {
-  //             console.log("uploaded: ", snapshot.metadata);
-  //             alert("audio uploaded!");
-  //             navigate("/DragDropOne");
-  //           })
-
-  //           .catch((error) => {
-  //             console.log("error: ", error);
-  //           });
-  //       })
-  //     : alert("no songs selected. press back to return");
-  // }
 
   return (
     <div>
@@ -135,7 +111,6 @@ export default function YTfeature() {
               src={youtube}
               className="sm:w-[1.5rem] max-h-[1.2rem] my-auto ml-2 -mr-8"
             />
-            {/* onChange={(e) => setSearch(e.target.value)} */}
             <input
               type="text"
               value={search}
@@ -187,9 +162,10 @@ export default function YTfeature() {
         </Link> */}
         <Link to="../DragDropOne">
           <img
-            className="cursor-pointer md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
+            className="hover:scale-[120%] duration-300 cursor-pointer md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
             // onClick={handleUpload_YT}
-            src={audioList_YT.length === 0 ? done_inactive : done_active}
+            // src={audioList_YT.length === 0 ? done_inactive : done_active}
+            src={done_active}
           />
         </Link>
       </div>

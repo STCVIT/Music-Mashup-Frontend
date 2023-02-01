@@ -54,7 +54,7 @@ export default function LandingTwo() {
       <WhiteScreenAnimation />
       <div className="bg-whiteone w-screen h-screen absolute overflow-hidden ">
         <img
-          alt="outerring-farthest"
+          alt="outerring-farthest"  
           src={outerring2}
           className="h-[98%] object-scale-down absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
         />
