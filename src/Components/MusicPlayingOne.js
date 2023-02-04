@@ -23,26 +23,32 @@ export default function MusicPlayingOne({ setSongUrl, songUrl }) {
     show: false,
   });
 
+  const peepeepoopoo = "peepeepoopoo"
+
+  var data = JSON.stringify({
+    link: peepeepoopoo,
+  });
+
+  var config = {
+    method: "post",
+    url: `https://music-mashup-backend.onrender.com/remixedsongs/${user.email}`,  
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
   function saveSong() {
     console.log("song saved in profile.");
-    // will be completed after backend is hosted.
+    //will be completed after backend is hosted.
 
-    // var config = {
-    //   method: "post",
-    //   url: `http://localhost:3000/remixedsongs/${user.email}`,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   data: songUrl,
-    // };
-
-    // axios(config)
-    //   .then(function (response) {
-    //     console.log(JSON.stringify(response.data));
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   function downloadSong() {
@@ -101,8 +107,6 @@ export default function MusicPlayingOne({ setSongUrl, songUrl }) {
               onClick={downloadSong}
             />
           </a>
-        </div>
-        <div className="absolute flex items-center h-[75%] sm:flex-row sm:justify-around w-full top-[40%]">
           <motion.img
             whileHover={{ scale: 1.2 }}
             src={playing_discard_btn}
@@ -110,6 +114,9 @@ export default function MusicPlayingOne({ setSongUrl, songUrl }) {
             alt="SAVE Button"
             onClick={saveSong}
           />
+        </div>
+        <div className="absolute flex items-center h-[75%] sm:flex-row sm:justify-around w-full top-[40%]">
+          
         </div>
 
         <motion.img

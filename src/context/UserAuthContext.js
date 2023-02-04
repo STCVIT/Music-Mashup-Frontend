@@ -11,6 +11,7 @@ import {
   linkWithCredential,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import axios from "axios";
 
 const userAuthContext = createContext();
 
@@ -57,6 +58,29 @@ export function UserAuthContextProvider({ children }) {
       });
   }
 
+  var data = JSON.stringify({
+    email: user.email,
+  });
+
+  var config = {
+    method: "post",
+    url: 'https://music-mashup-backend.onrender.com/users',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  async function createUser() {
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   function setTokenFunc(x) {
     const temp1 = x.auth.lastNotifiedUid;
     console.log("from userauth: ", temp1);
@@ -79,6 +103,7 @@ export function UserAuthContextProvider({ children }) {
         setTokenFunc(user);
         console.log("user: ", user);
         console.log("unsubscribe: ", unsubscribe);
+        createUser();
       } else {
         anonUser();
       }

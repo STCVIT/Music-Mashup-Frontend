@@ -34,7 +34,6 @@ export default function Login() {
     e.preventDefault();
     try {
       await googleSignIn();
-      navigate("/DragDropOne");
     } catch (err) {
       setError(err.message);
     }

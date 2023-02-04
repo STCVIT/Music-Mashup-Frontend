@@ -32,7 +32,7 @@ export default function Signup() {
     if (pass == conf_password) {
       try {
         await signUp(email, conf_password);
-        await creareUser();
+        await createUser();
         navigate("/DragDropOne");
       } catch (err) {
         setError(err.message);
@@ -72,14 +72,14 @@ export default function Signup() {
 
   var config = {
     method: "post",
-    url: "http://localhost:3000/users",
+      url: 'https://music-mashup-backend.onrender.com/users',
     headers: {
       "Content-Type": "application/json",
     },
     data: data,
   };
 
-  function creareUser() {
+  async function createUser() {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
