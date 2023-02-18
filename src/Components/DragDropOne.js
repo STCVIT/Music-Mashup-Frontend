@@ -37,6 +37,9 @@ export default function DragDropOne({ setSongUrl }) {
     show: false,
   });
 
+  const base_link =
+    "http://ec2-54-238-72-104.ap-northeast-1.compute.amazonaws.com:8000/";
+  const linkList = [];
   const [audioList, setAudioList] = useState([]);
   const [audioUpload, setAudioUpload] = useState(null);
   const foldername = tokenlist[tokenlist.length - 1];
@@ -62,6 +65,7 @@ export default function DragDropOne({ setSongUrl }) {
               url: audiourl,
             },
           ]);
+          linkList.push(audiourl);
         });
       });
     });
@@ -91,9 +95,6 @@ export default function DragDropOne({ setSongUrl }) {
         setModalState({ ...modalState, show: false });
       }, 3000);
     } else {
-      // console.log(
-      //   "audio upload stores: " + audioUpload + " | type: " + typeof audioUpload
-      // );
       const audioRef = ref(storage, `${foldername}/${audioUpload.name}`);
       uploadBytes(audioRef, audioUpload).then((snapshot) => {
         getDownloadURL(snapshot.ref)
@@ -111,15 +112,9 @@ export default function DragDropOne({ setSongUrl }) {
               message: "" + error,
               show: true,
             });
-            // console.log("error: ", error);
           });
       });
     }
-
-    // if (audioList.length > 2) {
-    //   showboard.innerText = "UPLOADING";
-    //   return;
-    // }
   };
 
   // ------------- Delete Audios -------------
@@ -137,7 +132,6 @@ export default function DragDropOne({ setSongUrl }) {
   // };
 
   function handleDelete(userfoldername = foldername) {
-    // console.log("foldername: ", userfoldername);
     if (audioList.length == 0) {
       setModalState({
         heading: "ERROR",
@@ -148,13 +142,15 @@ export default function DragDropOne({ setSongUrl }) {
     } else {
       audioList.map((eachaudio) => {
         var audioRefDel = ref(storage, `${userfoldername}/${eachaudio.name}`);
-        // console.log("audioRefDel: ", audioRefDel);
         deleteObject(audioRefDel)
           .then(() => {
-            // console.log(`deleted ${eachaudio.name}`);
+            setModalState({
+              heading: "DELETED",
+              message: "Deleted songs",
+              show: true,
+            });
           })
           .catch((error) => {
-            // console.log("error in deletion: ", error);
             setModalState({
               heading: "ERROR",
               message: "" + error,
@@ -199,34 +195,62 @@ export default function DragDropOne({ setSongUrl }) {
     setHelpClick(!helpClick);
   }
 
-  function handleMash() {
+  async function handleMash() {
     console.log("mash btn clicked");
-
+    console.log("foldername: ", foldername);
     // const recieved_url =
     //   "https://archive.org/download/Creative_Commons_Song_MP3/creativecommonssong.mp3";
-    // setSongUrl(recieved_url);
-    // navigate("/MashingOne");
+    setSongUrl(base_link + "/user/" + foldername);
+    navigate("/MashingOne");
 
     // server link: http://ec2-54-238-72-104.ap-northeast-1.compute.amazonaws.com:8000/
 
-
     // -----------------------------------
-    if (audioList.length == 0) {
+    if (audioList.length < 2) {
       setModalState({
         heading: "ERROR",
-        message: "Can't mash NULL!",
+        message: "Need more than two songs!",
         show: true,
       });
       return;
     }
+
     // https://mm-backend.rbsparky.repl.co/
     if (audioList) {
-      fetch("http://ec2-54-238-72-104.ap-northeast-1.compute.amazonaws.com:8000/", {
+      // audioList.push(foldername);
+      linkList.push(foldername);
+      console.log("audiolist: ", audioList);
+
+      // try {
+      //   const response = await axios.post(
+      //     "http://ec2-54-238-72-104.ap-northeast-1.compute.amazonaws.com:8000/",
+      //     {
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //       body: JSON.stringify(audioList),
+      //     }
+      //   );
+      //   if (response.ok) {
+      //     console.log("Response recieved: ", response);
+      //   } else {
+      //     throw "Error in connecting to mashing server";
+      //   }
+      // } catch (error) {
+      //   setModalState({
+      //     heading: "ERROR",
+      //     message: error,
+      //     show: true,
+      //   });
+      // }
+
+      fetch(base_link, {
         headers: {
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify(audioList),
+        // body: JSON.stringify(audioList),
+        body: JSON.stringify(linkList),
       })
         .then(function (response) {
           console.log(response);
@@ -296,13 +320,6 @@ export default function DragDropOne({ setSongUrl }) {
               Upload Audio
             </button>
           </div>
-          {/* <div
-            className={
-              (!loader ? "hidden " : "") +
-              "w-full h-[10vh] bg-whiteone rounded-md flex items-center justify-center text-blackone font-bold"
-            }
-            id="showboard"
-          ></div> */}
 
           <div className="displayaudio grid grid-cols-5">
             {audioList &&

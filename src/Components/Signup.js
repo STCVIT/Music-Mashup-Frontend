@@ -14,7 +14,6 @@ import not_seen from "../Images/not_seen.png";
 import question_white from "../Images/question_white.png";
 import question_fill from "../Images/question_fill.png";
 import axios from "axios";
-
 export default function Signup() {
   const [modalState, setModalState] = useState({
     heading: "",
@@ -24,7 +23,6 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [pass, setPassword] = useState("");
   const [conf_password, setConf_Password] = useState("");
-  const [error, setError] = useState("");
   const { signUp } = useUserAuth();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -35,18 +33,16 @@ export default function Signup() {
         await createUser();
         navigate("/DragDropOne");
       } catch (err) {
-        setError(err.message);
         setModalState({
           heading: "ERROR",
-          message: error,
+          message: err,
           show: true,
         });
       }
     } else {
-      setError("Passwords don't match!");
       setModalState({
         heading: "ERROR",
-        message: error,
+        message: "Passwords don't match!",
         show: true,
       });
     }
@@ -72,7 +68,7 @@ export default function Signup() {
 
   var config = {
     method: "post",
-      url: 'https://music-mashup-backend.onrender.com/users',
+    url: "https://music-mashup-backend.onrender.com/users",
     headers: {
       "Content-Type": "application/json",
     },

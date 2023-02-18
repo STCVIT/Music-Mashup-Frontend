@@ -4,9 +4,9 @@ import { useState } from "react";
 import BlackScreenAnimation from "./BlackScreenAnimation";
 import login_bg_1 from "../Images/login_bg_1.png";
 import login_bg_2 from "../Images/login_bg_2.png";
-import home_white from "../Images/home_white.png";
-import google from "../Images/google.png";
-import not_seen from "../Images/not_seen.png";
+// import home_white from "../Images/home_white.png";
+// import google from "../Images/google.png";
+// import not_seen from "../Images/not_seen.png";
 import { useUserAuth } from "../context/UserAuthContext";
 
 export default function ResetPassword() {

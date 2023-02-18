@@ -12,11 +12,16 @@ import login_bg_2 from "../Images/login_bg_2.png";
 import not_seen from "../Images/not_seen.png";
 import question_white from "../Images/question_white.png";
 import question_fill from "../Images/question_fill.png";
-
+import Modal from "./Modal";
 export default function Login() {
+  const [modalState, setModalState] = useState({
+    heading: "",
+    message: "",
+    show: false,
+  });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const { signIn, googleSignIn } = useUserAuth();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -24,9 +29,18 @@ export default function Login() {
     console.log("useuserauth", useUserAuth);
     try {
       await signIn(email, password);
+      setModalState({
+        heading: "SUCCESS",
+        message: "Sign in successful! Welcome back, user :)",
+        show: true,
+      });
       navigate("/DragDropOne");
     } catch (err) {
-      setError(err.message);
+      setModalState({
+        heading: "ERROR",
+        message: err,
+        show: true,
+      });
     }
   };
 
@@ -34,13 +48,21 @@ export default function Login() {
     e.preventDefault();
     try {
       await googleSignIn();
+      setModalState({
+        heading: "SUCCESS",
+        message: "Sign in successful! Welcome back, user :)",
+        show: true,
+      });
     } catch (err) {
-      setError(err.message);
+      setModalState({
+        heading: "ERROR",
+        message: err,
+        show: true,
+      });
     }
   };
 
   function handlePasswordEye() {
-    // console.log("in handle password eye function");
     const passInput = document.getElementById("password");
 
     if (passInput.getAttribute("type") === "text") {
@@ -60,6 +82,12 @@ export default function Login() {
       <BlackScreenAnimation />
       <div className="h-screen w-screen absolute text-whiteone overflow-hidden flex flex-col justify-center items-center">
         <Navbar />
+        <Modal
+          show={modalState.show}
+          heading={modalState.heading}
+          message={modalState.message}
+          onClose={() => setModalState({ ...modalState, show: false })}
+        />
         <div className="flex flex-col justify-center text-center items-center w-[80%]">
           <div className="text-3xl mb-8">Welcome Back</div>
           <form

@@ -15,6 +15,7 @@ import MyMusic from "./Components/MyMusic";
 import YTfeature from "./Components/YTfeature";
 import { useUserAuth } from "./context/UserAuthContext";
 import { useState } from "react";
+const axios = require("axios");
 
 export default function App() {
   const { setTokenFunc, anonUser } = useUserAuth;
@@ -42,7 +43,9 @@ export default function App() {
             <Route
               path="/MusicPlayingOne"
               exact
-              element={<MusicPlayingOne setSongUrl={setSongUrl} songUrl={songUrl}/>}
+              element={
+                <MusicPlayingOne setSongUrl={setSongUrl} songUrl={songUrl} />
+              }
             />
             <Route
               path="/MashingOne"

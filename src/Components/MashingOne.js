@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import mashing_cd from "../Images/mashing_cd.png";
-import home_black from "../Images/home_black.png";
 import { motion } from "framer-motion";
 import WhiteScreenAnimation from "./WhiteScreenAnimation";
-import user from "../Images/user.png";
 import { useNavigate } from "react-router-dom";
 export default function MashingOne({ songUrl }) {
   const navigate = useNavigate();

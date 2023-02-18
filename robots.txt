@@ -1,0 +1,1 @@
+User-agent: * Disallow: /src/Components/TempFile.js

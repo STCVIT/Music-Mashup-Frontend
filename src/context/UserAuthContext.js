@@ -71,15 +71,15 @@ export function UserAuthContextProvider({ children }) {
     data: data,
   };
 
-  async function createUser() {
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+  // async function createUser() {
+  //   axios(config)
+  //     .then(function (response) {
+  //       console.log(JSON.stringify(response.data));
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
 
   function setTokenFunc(x) {
     const temp1 = x.auth.lastNotifiedUid;
@@ -103,7 +103,7 @@ export function UserAuthContextProvider({ children }) {
         setTokenFunc(user);
         console.log("user: ", user);
         console.log("unsubscribe: ", unsubscribe);
-        createUser();
+        // createUser();
       } else {
         anonUser();
       }

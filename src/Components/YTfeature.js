@@ -9,9 +9,6 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { v4 } from "uuid";
-// import { storage } from "../firebase";
-// import { ref, uploadBytes } from "firebase/storage";
 import BlackScreenAnimation from "./BlackScreenAnimation";
 import dragdrop from "../Images/dragdrop-bg.png";
 import search_black from "../Images/search_black.png";
@@ -19,12 +16,16 @@ import done_active from "../Images/done_active.png";
 import done_inactive from "../Images/done_inactive.png";
 import youtube from "../Images/youtube.png";
 import Navbar from "./Navbar";
+import Modal from "./Modal";
+import axios from "axios";
 
 export default function YTfeature() {
-  const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const [audioList_YT, setAudioList_YT] = useState([]);
-
+  const [modalState, setModalState] = useState({
+    heading: "",
+    message: "",
+    show: false,
+  });
   const API_KEY = "AIzaSyCNwlyKFyVNrX8evy9Y4CnazgoD8Zo_Efc";
   const maxResults = 10;
   const topics = "/m/04rlf";
@@ -57,7 +58,10 @@ export default function YTfeature() {
   function handleSearch(query) {
     if (query) {
       setSearch(query);
-      fetch(url)
+      axios(url, {
+        options: options,
+      })
+        // fetch(url)
         .then((res) => {
           if (!res.ok) {
             throw Error("error: ", res.status);
@@ -67,31 +71,52 @@ export default function YTfeature() {
         })
         .then((data) => {
           data.items.map((each) => {
-            console.log("each: ", each);
-            const each_url = `https://www.youtube.com/watch?v=${each.id.videoId}`;
+            // console.log("each: ", each);
 
-            // fetch(
-            //   `https://youtube-mp3-download1.p.rapidapi.com/dl?id=${theid}`,
-            //   options
-            // )
-            // .then((response) => response.json())
-            // .then((response) => {
-            //   setAllDetails((prev) => [
-            //     ...prev,
-            //     {
-            //       title: response.title,
-            //       link: response.link,
-            //     },
-            //   ]);
-            // })
-            // .catch((err) => console.error("error in each id: ", err));
+            // const each_url = `https://www.youtube.com/watch?v=${each.id.videoId}`;
+            const theid = each.id.videoId;
+            fetch(
+              `https://youtube-mp3-download1.p.rapidapi.com/dl?id=${theid}`,
+              options
+            )
+              // fetch(
+              //   `https://youtube-mp3-download1.p.rapidapi.com/dl?id=${theid}`,
+              //   options
+              // )
+              .then((response) => response.json())
+              .then((response) => {
+                setAllDetails((prev) => [
+                  ...prev,
+                  {
+                    title: response.title,
+                    link: response.link,
+                  },
+                ]);
+              })
+              .catch((err) => {
+                setModalState({
+                  heading: "ERROR",
+                  message: err,
+                  show: true,
+                });
+              });
           });
         })
         .catch((err) => {
-          console.log("catching error while fetching ids: ", err);
+          setModalState({
+            heading: "ERROR",
+            message: err,
+            show: true,
+          });
+          // console.log("catching error while fetching ids: ", err);
         });
     } else {
-      console.log("search is empty");
+      setModalState({
+        heading: "ERROR",
+        message: "Type something to serach for!",
+        show: true,
+      });
+      // console.log("search is empty");
     }
   }
 
@@ -99,6 +124,12 @@ export default function YTfeature() {
     <div>
       <BlackScreenAnimation />
       <Navbar />
+      <Modal
+        show={modalState.show}
+        heading={modalState.heading}
+        message={modalState.message}
+        onClose={() => setModalState({ ...modalState, show: false })}
+      />
       <div className="display-area h-screen w-screen text-whiteone overflow-hidden flex flex-col justify-center items-center">
         <img
           alt="BG Design"
@@ -130,6 +161,9 @@ export default function YTfeature() {
               Then, hop over to the previous page and upload it for mashing!
             </div>
           )}
+          {!all_details && search && (
+            <div className="text-sm italic sm:text-[1rem]">Loading</div>
+          )}
           {all_details &&
             all_details.map((each) => (
               <div className="border-2 border-whiteone px-5 my-2 flex flex-row justify-between">
@@ -138,17 +172,6 @@ export default function YTfeature() {
                   className="cursor-pointer text-3xl my-auto no-underline"
                   href={each.link}
                   target="_blank"
-                  // onClick={() => {
-                  //   console.log("song " + each.link + " added");
-                  //   console.log("list is now: ", audioList_YT);
-                  //   setAudioList_YT((prev) => [
-                  //     ...prev,
-                  //     {
-                  //       aname: each.title,
-                  //       link: each.link,
-                  //     },
-                  //   ]);
-                  // }}
                 >
                   +
                 </a>
@@ -164,8 +187,8 @@ export default function YTfeature() {
           <img
             className="hover:scale-[120%] duration-300 cursor-pointer md:w-[7rem] w-[6rem] absolute bottom-10 left-[50%] translate-x-[-50%]"
             // onClick={handleUpload_YT}
-            // src={audioList_YT.length === 0 ? done_inactive : done_active}
-            src={done_active}
+            src={all_details.length === 0 ? done_inactive : done_active}
+            // src={done_active}
           />
         </Link>
       </div>
