@@ -11,7 +11,6 @@ import {
   linkWithCredential,
 } from "firebase/auth";
 import { auth } from "../firebase";
-import axios from "axios";
 
 const userAuthContext = createContext();
 
@@ -58,29 +57,27 @@ export function UserAuthContextProvider({ children }) {
       });
   }
 
-  var data = JSON.stringify({
-    email: user.email,
-  });
+  async function createUser(email) {
 
-  var config = {
-    method: "post",
-    url: 'https://music-mashup-backend.onrender.com/users',
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: data,
-  };
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-  // async function createUser() {
-  //   axios(config)
-  //     .then(function (response) {
-  //       console.log(JSON.stringify(response.data));
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
+    var raw = JSON.stringify({
+      "Email": email
+    });
 
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://music-mashup-backend-golang.onrender.com/api/users/", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
   function setTokenFunc(x) {
     const temp1 = x.auth.lastNotifiedUid;
     console.log("from userauth: ", temp1);
@@ -102,8 +99,9 @@ export function UserAuthContextProvider({ children }) {
         setUser(user);
         setTokenFunc(user);
         console.log("user: ", user);
+        console.log("useremail:", user.email);
         console.log("unsubscribe: ", unsubscribe);
-        // createUser();
+        createUser(user.email)
       } else {
         anonUser();
       }

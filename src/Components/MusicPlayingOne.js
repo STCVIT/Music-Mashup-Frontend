@@ -26,12 +26,13 @@ export default function MusicPlayingOne({ setSongUrl, songUrl }) {
   const peepeepoopoo = "peepeepoopoo"
 
   var data = JSON.stringify({
-    link: peepeepoopoo,
+    Link: peepeepoopoo,
+    UserEmail: user.email
   });
 
   var config = {
     method: "post",
-    url: `https://music-mashup-backend.onrender.com/remixedsongs/${user.email}`,  
+    url: `https://music-mashup-backend-golang.onrender.com/api/songs/`,  
     headers: {
       "Content-Type": "application/json",
     },
