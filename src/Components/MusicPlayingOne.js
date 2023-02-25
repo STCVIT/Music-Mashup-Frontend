@@ -3,6 +3,7 @@ import playing_bg_circle from "../Images/playing_bg_circle.png";
 import playing_cd from "../Images/playing_cd.png";
 import playing_discard_btn from "../Images/playing_discard_btn.png";
 import playing_download_btn from "../Images/playing_download_btn.png";
+import playing_save_btn from "../Images/playing_save_btn.png";
 import playing_btn from "../Images/playing_btn.png";
 import { motion } from "framer-motion";
 import BlackScreenAnimation from "./BlackScreenAnimation";
@@ -16,6 +17,7 @@ export default function MusicPlayingOne({ setSongUrl, songUrl }) {
   console.log("url recieved: ", songUrl);
   const navigate = useNavigate();
   const { user } = useUserAuth();
+  const audio = new Audio(songUrl);
 
   const [modalState, setModalState] = useState({
     heading: "",
@@ -23,16 +25,15 @@ export default function MusicPlayingOne({ setSongUrl, songUrl }) {
     show: false,
   });
 
-  const peepeepoopoo = "peepeepoopoo"
+  const peepeepoopoo = "peepeepoopoo";
 
   var data = JSON.stringify({
-    Link: peepeepoopoo,
-    UserEmail: user.email
+    link: peepeepoopoo,
   });
 
   var config = {
     method: "post",
-    url: `https://music-mashup-backend-golang.onrender.com/api/songs/`,  
+    url: `https://music-mashup-backend.onrender.com/remixedsongs/${user.email}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -99,37 +100,40 @@ export default function MusicPlayingOne({ setSongUrl, songUrl }) {
             alt="Discard Button"
             onClick={discardSong}
           />
-          <a target="_blank" href={songUrl}>
-            <motion.img
-              whileHover={{ scale: 1.2 }}
-              src={playing_download_btn}
-              className="cursor-pointer w-[6rem] md:w-[7rem]"
-              alt="Download Button"
-              onClick={downloadSong}
-            />
-          </a>
           <motion.img
             whileHover={{ scale: 1.2 }}
-            src={playing_discard_btn}
+            src={playing_save_btn}
             className="cursor-pointer w-[6rem] md:w-[7rem]"
             alt="SAVE Button"
             onClick={saveSong}
           />
         </div>
-        <div className="absolute flex items-center h-[75%] sm:flex-row sm:justify-around w-full top-[40%]">
-          
-        </div>
+
+        <a
+          target="_blank"
+          href={songUrl}
+          className="absolute flex items-center pt-[50vh] h-full justify-around w-full"
+        >
+          <motion.img
+            whileHover={{ scale: 1.2 }}
+            src={playing_download_btn}
+            className="cursor-pointer w-[6rem] md:w-[7rem]"
+            alt="Download Button"
+            onClick={downloadSong}
+          />
+        </a>
 
         <motion.img
           whileHover={{ scale: 0.8 }}
           src={playing_btn}
           className="absolute cursor-pointer"
           alt="Play Button"
+          onClick={audio.play()}
         />
       </div>
-      <audio controls display>
+      {/* <audio controls display>
         <source src={songUrl} type="audio/ogg"></source>
-      </audio>
+      </audio> */}
     </div>
   );
 }

@@ -27,6 +27,7 @@ import Navbar from "./Navbar";
 import BlackScreenAnimation from "./BlackScreenAnimation";
 import Help from "./Help";
 import Modal from "./Modal";
+import MashingOne from "./MashingOne";
 
 export default function DragDropOne({ setSongUrl }) {
   const navigate = useNavigate();
@@ -201,11 +202,12 @@ export default function DragDropOne({ setSongUrl }) {
     // const recieved_url =
     //   "https://archive.org/download/Creative_Commons_Song_MP3/creativecommonssong.mp3";
     setSongUrl(base_link + "/user/" + foldername);
-    navigate("/MashingOne");
+    // navigate("/MashingOne");
+    
 
     // server link: http://ec2-54-238-72-104.ap-northeast-1.compute.amazonaws.com:8000/
 
-    // -----------------------------------
+    // ----------------------------------------------------------------------
     if (audioList.length < 2) {
       setModalState({
         heading: "ERROR",
@@ -220,6 +222,7 @@ export default function DragDropOne({ setSongUrl }) {
       // audioList.push(foldername);
       linkList.push(foldername);
       console.log("audiolist: ", audioList);
+      return <MashingOne linkList={linkList} foldername = {foldername}/>
 
       // try {
       //   const response = await axios.post(
@@ -244,31 +247,31 @@ export default function DragDropOne({ setSongUrl }) {
       //   });
       // }
 
-      fetch(base_link, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        // body: JSON.stringify(audioList),
-        body: JSON.stringify(linkList),
-      })
-        .then(function (response) {
-          console.log(response);
-          if (response.ok) {
-            response.json().then(function (response) {
-              console.log("recieved: " + response);
-            });
-          } else {
-            throw Error("encountered some error.");
-          }
-        })
-        .catch(function (error) {
-          setModalState({
-            heading: "ERROR",
-            message: error,
-            show: true,
-          });
-        });
+    //   fetch(base_link, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     method: "POST",
+    //     // body: JSON.stringify(audioList),
+    //     body: JSON.stringify(linkList),
+    //   })
+    //     .then(function (response) {
+    //       console.log(response);
+    //       if (response.ok) {
+    //         response.json().then(function (response) {
+    //           console.log("recieved: " + response);
+    //         });
+    //       } else {
+    //         throw Error("encountered some error.");
+    //       }
+    //     })
+    //     .catch(function (error) {
+    //       setModalState({
+    //         heading: "ERROR",
+    //         message: error,
+    //         show: true,
+    //       });
+    //     });
     }
     // -----------------------------------
   }

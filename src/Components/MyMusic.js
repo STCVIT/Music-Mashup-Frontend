@@ -7,6 +7,7 @@ import search from "../Images/search.png";
 import WhiteScreenAnimation from "./WhiteScreenAnimation";
 import { Link } from "react-router-dom";
 import { useUserAuth } from "../context/UserAuthContext";
+import { data } from "./sample_data";
 
 const MyMusic = () => {
   const { user } = useUserAuth();
@@ -15,7 +16,7 @@ const MyMusic = () => {
     <div className="min-h-screen">
       <WhiteScreenAnimation />
       <Navbar />
-      <form className="search-bar px-4 absolute z-10 top-3.5 left-1/2 transform translate-x-[-12rem] hidden md:block">
+      <form className="search-bar px-4 absolute z-50 top-3.5 left-1/2 transform translate-x-[-12rem] hidden md:block">
         <div className="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +34,7 @@ const MyMusic = () => {
           </svg>
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search Music"
             className="w-full py-2 pl-12 pr-32 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white"
           />
         </div>
@@ -72,7 +73,7 @@ const MyMusic = () => {
             : "hidden"
         }
       >
-        User is logged in. User data:
+        <div className="bg-blackone w-[75vw] h-[75vh] rounded-lg"></div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import MusicPlayingOne from "./Components/MusicPlayingOne";
 import MashingOne from "./Components/MashingOne";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import ResetPassword from "./Components/ResetPassword";
@@ -50,7 +50,8 @@ export default function App() {
             <Route
               path="/MashingOne"
               exact
-              element={<MashingOne songUrl={songUrl} />}
+              // element={<MashingOne songUrl={songUrl} />}
+              element={<MashingOne />}
             />
             <Route path="/Login" exact element={<Login />} />
             <Route path="/Signup" exact element={<Signup />} />

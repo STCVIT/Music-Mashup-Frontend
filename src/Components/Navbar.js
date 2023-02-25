@@ -12,7 +12,7 @@ const Navbar = () => {
   const { user } = useUserAuth();
 
   return (
-    <div className="flex justify-between absolute z-10 top-0 w-full bg-blackone md:py-4 p-2 drop-shadow-2xl">
+    <div className="flex justify-between absolute z-50 top-0 w-full bg-blackone md:py-4 p-2 drop-shadow-2xl">
       <Link to="../LandingTwo" className="w-[2rem] my-auto ml-2">
         <motion.img
           whileHover={{ scale: 1.2 }}
